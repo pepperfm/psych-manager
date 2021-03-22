@@ -1,0 +1,30 @@
+# IDE
+/.idea
+/.vscode
+.phpstorm.meta.php
+_ide_helper.php
+
+/node_modules
+/public/storage
+/storage/*.key
+/storage/app
+/storage/framework
+/storage/logs
+/vendor
+.env
+.env.backup
+.phpunit.result.cache
+Homestead.json
+Homestead.yaml
+npm-debug.log
+yarn-error.log
+composer.lock
+.rnd
+
+# Admin pages
+public/js/app.js
+public/js/admin/users-vue/app.js
+public/js/admin/sessions-vue/app.js
+public/js/admin/categories-vue/app.js
+public/js/admin/profile-vue/app.js
+public/js/admin/login-vue/app.js

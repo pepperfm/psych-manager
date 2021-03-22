@@ -1,0 +1,39 @@
+version: "3.9"
+
+services:
+    nginx:
+        build:
+            context: .
+            dockerfile: docker/nginx/Dockerfile
+        ports:
+            - 4152:9144
+        links:
+            - php-fpm
+        volumes:
+            - ./:/var/www/psych-manager
+        working_dir: /var/www/psych-manager
+        container_name: psy-nginx
+        restart: unless-stopped
+
+    php-fpm:
+        build:
+            context: .
+            dockerfile: docker/Dockerfile
+        volumes:
+            - ./:/var/www/psych-manager
+        links:
+            - mysql
+        working_dir: /var/www/psych-manager
+        container_name: psy-php
+        restart: unless-stopped
+
+    mysql:
+        image: mysql:latest
+        ports:
+            - 6378:3306
+        environment:
+            - MYSQL_ROOT_PASSWORD=root
+            - MYSQL_DATABASE=psych_manager
+        working_dir: /var/www/psych-manager
+        container_name: psy-mysql
+        restart: unless-stopped
