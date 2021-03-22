@@ -16,4 +16,7 @@
 #### run server
 - `php artisan serve` or `docker-compose up -d --build` whatever you use.
 
+#### login
+- install passport (variables to .env) and use `migrate:fresh --seed` data for login.
+
 Done! U'r ready to use app.
