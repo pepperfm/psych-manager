@@ -1,9 +1,35 @@
 <template>
-   <aside class="main-sidebar">
-     <div>1</div>
-     <div>2</div>
-     <div>3</div>
-   </aside>
+  <el-aside
+    id="sidebar"
+    style="overflow-y: scroll"
+    class="hidden-sm-and-down aside"
+    :style="{ width: collapsed ? '64px' : '300px' }"
+  >
+    <el-row>
+      <el-col class="aside-user-info" :class="{ collapsed: collapsed }">
+        <el-col>
+          <el-menu
+            :default-active="$route.meta.menuitem"
+            class="el-menu-vertical"
+            :collapse="collapsed"
+            background-color="#30313e"
+            text-color="#cfd8dc"
+            active-text-color="#ffffff"
+          >
+            <el-menu-item index="2" @click="toRoute('clients')">
+              <i class="fas fa-address-card"></i>
+              <span slot="title">Клиенты</span>
+            </el-menu-item>
+
+            <el-menu-item index="3" @click="toRoute('sessions')">
+              <i class="fas fa-comments"></i>
+              <span slot="title">Сессии</span>
+            </el-menu-item>
+          </el-menu>
+        </el-col>
+      </el-col>
+    </el-row>
+  </el-aside>
 </template>
 <script>
 // import UserFiltersMixin from '@admin-mixins/UserFiltersMixin.js'

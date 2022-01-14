@@ -2,6 +2,9 @@
 
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Resources\Api\User\UserResource;
+use App\Http\Middleware\TransformIndexRequest;
+
 use App\Http\Controllers\Api\{
     CategoryController,
     ClientController,
@@ -16,7 +19,7 @@ use App\Http\Controllers\Api\StaticDataController;
  */
 Route::group([
     'prefix' => 'v1',
-], function () {
+], static function () {
     Route::get('/tooltips', [StaticDataController::class, 'getTooltips']);
 });
 
@@ -26,10 +29,10 @@ Route::group([
 Route::group([
     'prefix' => 'v1',
     'middleware' => 'auth:api',
-], function () {
+], static function () {
     Route::group([
         'prefix' => 'static-data'
-    ], function () {
+    ], static function () {
         Route::get('/get-connection-types', [StaticDataController::class, 'getConnectionTypes']);
         Route::get('/get-meeting-types', [StaticDataController::class, 'getMeetingTypes']);
         Route::get('/get-gender-list', [StaticDataController::class, 'getGenderList']);
@@ -37,15 +40,18 @@ Route::group([
         Route::get('/clients-all', [StaticDataController::class, 'getClients']);
     });
 
-    Route::get('user', fn() => \Auth::user());
+    Route::get('user', static fn() => UserResource::make(\Auth::user()));
 
     Route::get('/calendar-sessions', [SessionController::class, 'getCalendarSessions']);
     Route::post('/users/sync-categories', [UserController::class, 'syncCategories']);
 
-    Route::apiResources([
-        'categories' => CategoryController::class,
-        'clients' => ClientController::class,
-        'sessions' => SessionController::class,
-    ]);
-    Route::apiResource('users', UserController::class)->only(['index', 'update']);
+    Route::middleware([TransformIndexRequest::class])->group(static fn() =>
+        Route::apiResources([
+            'categories' => CategoryController::class,
+            'clients' => ClientController::class,
+            'sessions' => SessionController::class,
+        ])
+    );
+    Route::apiResource('users', UserController::class)->only(['index', 'update'])
+        ->middleware([TransformIndexRequest::class]);
 });

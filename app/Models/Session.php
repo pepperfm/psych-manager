@@ -3,13 +3,19 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\{
-    Builder, Factories\HasFactory, Relations\BelongsTo
+    Builder,
+    Casts\Attribute,
+    Factories\HasFactory,
+    Relations\BelongsTo
 };
+use Illuminate\Database\Query\Builder as QueryBuilder;
+
 use Illuminate\Support\Facades\Auth;
 
 use Bkwld\Cloner\Cloneable;
 
-use App\Traits\PaginationTrait;
+use App\Builders\FilterBuilder;
+// use App\Traits\PaginationTrait;
 
 use App\Models\Scopes\SessionUserScope;
 
@@ -27,7 +33,7 @@ use App\Models\Scopes\SessionUserScope;
  */
 class Session extends BaseModel
 {
-    use HasFactory, Cloneable, PaginationTrait;
+    use HasFactory, Cloneable;
 
     /**
      * @inheritdoc
@@ -55,6 +61,16 @@ class Session extends BaseModel
     protected static function booted(): void
     {
         static::addGlobalScope(new SessionUserScope(Auth::id() ?? 1));
+    }
+
+    /**
+     * @param QueryBuilder $query
+     *
+     * @return FilterBuilder|QueryBuilder|Builder
+     */
+    public function newEloquentBuilder($query): FilterBuilder|QueryBuilder|Builder
+    {
+        return new FilterBuilder($query);
     }
 
     /**
@@ -94,30 +110,36 @@ class Session extends BaseModel
     }
 
     /**
-     * @param $value
-     *
      * @throws \Exception
-     * @return string
+     * @return Attribute
      */
-    public function getSessionDateAttribute($value): string
+    public function sessionDate(): Attribute
     {
-        return (new \DateTime($value))->format('d-m-Y H:i');
+        return new Attribute(
+            get: fn($value) => (new \DateTime($value))->format('d-m-Y H:i')
+        );
     }
+
     /**
      * @throws \Exception
-     * @return string
+     * @return Attribute
      */
-    public function getSessionDateSecondsAttribute(): string
+    public function sessionDateSeconds(): Attribute
     {
-        return (new \DateTime($this->session_date))->format('Y-m-d H:i:s');
+        return new Attribute(
+            get: fn($value) => (new \DateTime($this->session_date))->format('Y-m-d H:i:s')
+        );
     }
+
     /**
      * @throws \Exception
-     * @return string
+     * @return Attribute
      */
-    public function getSessionDateCalendarAttribute(): string
+    public function sessionDateCalendar(): Attribute
     {
-        return (new \DateTime($this->session_date))->format('Y-m-d H:i');
+        return new Attribute(
+            get: fn($value) => (new \DateTime($this->session_date))->format('Y-m-d H:i')
+        );
     }
 
     /**

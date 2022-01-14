@@ -20,13 +20,27 @@ const routes = [
   },
   {
     path: '/',
+    name: 'main',
     components: { aside: DefaultAside, header: DefaultHeader, default: Main },
-    meta: { auth: false, menuitem: '1' }
+    meta: { auth: true, menuitem: '1' }
   },
   {
     path: '/login',
+    name: 'login',
     components: { aside: LoginAside, header: LoginHeader, default: Login },
-    meta: { auth: false, menuitem: '5' }
+    meta: { auth: false, menuitem: '0' }
+  },
+  {
+    path: '/clients',
+    name: 'clients',
+    components: { aside: DefaultAside, header: DefaultHeader, default: Login },
+    meta: { auth: false, menuitem: '2' }
+  },
+  {
+    path: '/sessions',
+    name: 'sessions',
+    components: { aside: DefaultAside, header: DefaultHeader, default: Login },
+    meta: { auth: false, menuitem: '3' }
   },
 ]
 
@@ -38,7 +52,6 @@ const router = new VueRouter({
 
 router.beforeEach((to, from, next) => {
   if (to.matched.some(record => record.meta.auth)) {
-    console.log(window.$identity.isGuest)
     if (!window.$identity.isGuest) {
       next()
       return

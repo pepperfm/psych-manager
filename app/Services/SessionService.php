@@ -6,6 +6,8 @@ use Illuminate\Support\Collection;
 
 use Carbon\Carbon;
 
+use App\Builders\FilterBuilder;
+
 use App\Models\Session;
 
 class SessionService
@@ -18,10 +20,13 @@ class SessionService
      */
     public function getSessionsWithFilters($filters, &$total): Collection
     {
-        $sessions = Session::q()->with(['user'])->withFilters($filters);
-        $total = $sessions->count();
+        /** @var FilterBuilder $sessionsQ */
+        $sessionsQ = Session::q()->with(['user'])->withFilters($filters['fields'] ?? []);
+        $total = $sessionsQ->count();
 
-        return $sessions->paginationApi($filters)->get();
+        return $sessionsQ->withPagination($filters['pagination'] ?? [])
+            ->sort($filters['sort'] ?? [])
+            ->get();
     }
 
     /**
