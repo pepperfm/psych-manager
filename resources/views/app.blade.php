@@ -13,15 +13,20 @@
 
 <body>
 <div id="app">
+   
+
     <el-container>
-        <el-header>
-            <router-view name="header"></router-view>
-        </el-header>
-        <el-main class="main-container">
             <router-view class="aside" name="aside"></router-view>
+        <el-container>
+            <el-header>
+                <router-view name="header"></router-view>
+            </el-header>
+        <el-main class="main-container">
             <router-view></router-view>
         </el-main>
-    </el-container>
+  </el-container>
+</el-container>
+    
 </div>
 <script type="text/javascript" src="{{ mix('js/app.js') }}"></script>
 <link rel="stylesheet" href="{{ mix('css/app.css') }}" />
