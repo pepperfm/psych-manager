@@ -16,7 +16,7 @@
             text-color="#cfd8dc"
             active-text-color="#ffffff"
           >
-            <el-menu-item index="2" @click="toRoute('users')">
+            <el-menu-item index="2" @click="toRoute('clients')">
               <i class="fas fa-address-card"></i>
               <span slot="title">Клиенты</span>
             </el-menu-item>

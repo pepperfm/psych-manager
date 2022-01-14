@@ -5,12 +5,11 @@ import router from './router'
 import Identity from "./classes/Identity";
 import axios from "./classes/AxiosWrapper"
 
-// import { RayPlugin } from "vue-ray/vue2";
-
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 
-import bootstrap from 'bootstrap';
+import 'bootstrap';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 import lang from 'element-ui/lib/locale/lang/ru-RU'
 import locale from 'element-ui/lib/locale'
@@ -19,7 +18,6 @@ locale.use(lang)
 
 Vue.use(VueRouter);
 Vue.use(ElementUI, { size: 'small'});
-// Vue.use(RayPlugin, { interceptErrors: true, host: '127.0.0.1', port: 23517 });
 
 async function init() {
   try {
