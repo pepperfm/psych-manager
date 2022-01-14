@@ -2,7 +2,6 @@
 
 use Illuminate\Support\Facades\Route;
 
-use App\Http\Resources\Api\User\UserResource;
 use App\Http\Middleware\TransformIndexRequest;
 
 use App\Http\Controllers\Api\{
@@ -40,7 +39,7 @@ Route::group([
         Route::get('/clients-all', [StaticDataController::class, 'getClients']);
     });
 
-    Route::get('user', static fn() => UserResource::make(\Auth::user()));
+    Route::get('user', static fn() => \Auth::user());
 
     Route::get('/calendar-sessions', [SessionController::class, 'getCalendarSessions']);
     Route::post('/users/sync-categories', [UserController::class, 'syncCategories']);
