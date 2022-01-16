@@ -1,8 +1,19 @@
 <template>
     <nav class="main-header navbar d-flex">
-      <div>1</div>
+     
+        <div index="2" @click="toggleCollapse()">
+          <i :class="[ 'fas fa-bars',  {'rotate': toggled },'burger']"></i
+        ></div>
+      
+      
       <div>2</div>
-      <div>3</div>
+       <el-dropdown>
+        <span>Current User</span>
+        <el-dropdown-menu slot="dropdown">
+          <el-dropdown-item>Профиль</el-dropdown-item>
+          <el-dropdown-item>Выход</el-dropdown-item>
+        </el-dropdown-menu>
+      </el-dropdown>
     </nav>
 </template>
 
@@ -26,10 +37,8 @@ export default {
     });
   },
   methods: {
-    handleSelect(key, keyPath) {},
-    toggleIcon() {
-      this.toggled = !this.toggled;
-     },
+      
+   
     toggleCollapse() {
       this.$root.$emit("collapse-toggle", {});
     },
@@ -44,16 +53,14 @@ export default {
 </script>
 
 <style lang="css" scoped>
-.rotate {
-  transform: rotate(-180deg);
-}
+
 .burger {
-  transition: all 300ms ease-in-out;
-  font-size: 25px !important;
+  font-size: 20px !important;
+  color: rgba(0, 0, 0, 0.5);
 }
 .burger:hover {
-  color: #333;
-  transition: all 300ms ease-in-out;
+  color: rgba(0, 0, 0, 0.7);
+  transition: all 100ms ease-in-out;
 }
 .el-dropdown-link {
   width: 100%;

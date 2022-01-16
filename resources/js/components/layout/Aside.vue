@@ -1,9 +1,9 @@
 <template>
-  <el-aside
+     <el-aside
     id="sidebar"
     style="overflow-y: scroll"
-    class="hidden-sm-and-down aside"
-    :style="{ width: collapsed ? '64px' : '300px' }"
+    class="hidden-sm-and-down aside shadow"
+    :style="{ width: collapsed ? '64px' : '250px' }"
   >
     <el-row>
       <el-col class="aside-user-info" :class="{ collapsed: collapsed }">
@@ -12,19 +12,27 @@
             :default-active="$route.meta.menuitem"
             class="el-menu-vertical"
             :collapse="collapsed"
-            background-color="#30313e"
+            background-color="#343a40"
             text-color="#cfd8dc"
             active-text-color="#ffffff"
           >
-            <el-menu-item index="2" @click="toRoute('clients')">
-              <i class="fas fa-address-card"></i>
+            <el-menu-item class="main-nav-logo" index="1" @click="toRoute('home')">
+              <i class="el-icon-sunny"></i>
+              <span slot="title">Psych Manager</span>
+            </el-menu-item>
+          
+            <el-menu-item index="2" @click="toRoute('notifications')">
+              <i class="el-icon-user"></i>
               <span slot="title">Клиенты</span>
             </el-menu-item>
 
-            <el-menu-item index="3" @click="toRoute('sessions')">
-              <i class="fas fa-comments"></i>
+            
+
+            <el-menu-item index="11" @click="toRoute('actions')">
+              <i class="el-icon-chat-round"></i>
               <span slot="title">Сессии</span>
             </el-menu-item>
+
           </el-menu>
         </el-col>
       </el-col>
