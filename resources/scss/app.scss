@@ -23,13 +23,25 @@ body {
   height: auto;
   padding: 0;
   min-height: 100vh;
+  background: #f4f6f9;
 }
 .aside {
   transition: all 400ms ease-in-out;
+  background-color: rgb(52, 58, 64);
 }
 .el-submenu__title {
   padding: 0;
 }
 .el-menu.el-menu--horizontal {
   border-bottom: none;
+}
+
+.el-header {
+  border-bottom: 1px solid #dee2e6;
+}
+.main-nav-logo {
+  border-bottom: 1px solid #4b545c;
+}
+.main-header {
+  height: 100%;
 }
