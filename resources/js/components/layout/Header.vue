@@ -1,11 +1,8 @@
 <template>
     <nav class="main-header navbar d-flex">
-     
-        <div index="2" @click="toggleCollapse()">
+        <div index="2" @click="toggleCollapse(), toogleIcon()">
           <i :class="[ 'fas fa-bars',  {'rotate': toggled },'burger']"></i
         ></div>
-      
-      
       <div>2</div>
        <el-dropdown>
         <span>Current User</span>
@@ -23,8 +20,8 @@ export default {
     return {
       activeIndex: "1",
       pathName: "Psych Manager",
-      toggled: true,
-      toggled2: false,
+      toggled: false,
+      toggled2: true,
     };
   },
   created() {
@@ -38,6 +35,9 @@ export default {
   },
   methods: {
       
+      toogleIcon(){
+      this.toggled = !this.toggled;
+     },
    
     toggleCollapse() {
       this.$root.$emit("collapse-toggle", {});
@@ -53,14 +53,16 @@ export default {
 </script>
 
 <style lang="css" scoped>
-
+.rotate {
+  transform: rotate(270deg);
+}
 .burger {
+  transition: all 300ms ease-in-out;
   font-size: 20px !important;
   color: rgba(0, 0, 0, 0.5);
 }
 .burger:hover {
   color: rgba(0, 0, 0, 0.7);
-  transition: all 100ms ease-in-out;
 }
 .el-dropdown-link {
   width: 100%;

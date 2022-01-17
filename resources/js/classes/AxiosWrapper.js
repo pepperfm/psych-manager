@@ -47,7 +47,6 @@ class AxiosWrapper {
   }
 
   onSuccess(response) {
-    console.debug(`Request Successful!`, response);
 
     return response;
   }

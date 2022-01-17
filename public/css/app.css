@@ -29,6 +29,9 @@ body {
   min-height: 100vh;
   background: #f4f6f9;
 }
+.main-container .col-12 {
+  padding: 20px;
+}
 
 .aside {
   transition: all 400ms ease-in-out;
@@ -53,4 +56,17 @@ body {
 
 .main-header {
   height: 100%;
+}
+
+.card-header {
+  padding: 1rem;
+  background-color: #fff;
+}
+
+.row div:nth-child(2) {
+  text-align: right !important;
+}
+
+.actions {
+  text-align: center;
 }
