@@ -16,7 +16,7 @@
             text-color="#cfd8dc"
             active-text-color="#ffffff"
           >
-            <el-menu-item class="main-nav-logo" index="1" @click="toRoute('home')">
+            <el-menu-item class="main-nav-logo" index="1" @click="toRoute('clients')">
               <i class="el-icon-sunny"></i>
               <span slot="title">Psych Manager</span>
             </el-menu-item>

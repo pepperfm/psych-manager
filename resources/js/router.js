@@ -10,6 +10,7 @@ import LoginAside from "./components/login/LoginAside"
 import LoginHeader from "./components/login/LoginHeader"
 
 import Main from "./components/Main";
+import Clients from "./components/clients/Index"
 
 const routes = [
   {
@@ -33,7 +34,7 @@ const routes = [
   {
     path: '/clients',
     name: 'clients',
-    components: { aside: DefaultAside, header: DefaultHeader, default: Login },
+    components: { aside: DefaultAside, header: DefaultHeader, default: Clients },
     meta: { auth: false, menuitem: '2' }
   },
   {
