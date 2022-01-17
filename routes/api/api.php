@@ -13,13 +13,15 @@ use App\Http\Controllers\Api\{
 
 use App\Http\Controllers\Api\StaticDataController;
 
+use App\Http\Resources\Api\User\UserResource;
+
 /**
  * Unauthorized
  */
 Route::group([
     'prefix' => 'v1',
 ], static function () {
-    Route::get('/tooltips', [StaticDataController::class, 'getTooltips']);
+    Route::get('tooltips', [StaticDataController::class, 'getTooltips']);
 });
 
 /**
@@ -32,17 +34,17 @@ Route::group([
     Route::group([
         'prefix' => 'static-data'
     ], static function () {
-        Route::get('/get-connection-types', [StaticDataController::class, 'getConnectionTypes']);
-        Route::get('/get-meeting-types', [StaticDataController::class, 'getMeetingTypes']);
-        Route::get('/get-gender-list', [StaticDataController::class, 'getGenderList']);
-        Route::get('/get-categories', [StaticDataController::class, 'getCategories']);
-        Route::get('/clients-all', [StaticDataController::class, 'getClients']);
+        Route::get('connection-types', [StaticDataController::class, 'getConnectionTypes']);
+        Route::get('meeting-types', [StaticDataController::class, 'getMeetingTypes']);
+        Route::get('gender-list', [StaticDataController::class, 'getGenderList']);
+        Route::get('categories', [StaticDataController::class, 'getCategories']);
+        Route::get('clients-all', [StaticDataController::class, 'getClients']);
     });
 
-    Route::get('user', static fn() => \Auth::user());
+    Route::get('user', static fn() => UserResource::make(\Auth::user()));
 
-    Route::get('/calendar-sessions', [SessionController::class, 'getCalendarSessions']);
-    Route::post('/users/sync-categories', [UserController::class, 'syncCategories']);
+    Route::get('calendar-sessions', [SessionController::class, 'getCalendarSessions']);
+    Route::post('users/sync-categories', [UserController::class, 'syncCategories']);
 
     Route::middleware([TransformIndexRequest::class])->group(static fn() =>
         Route::apiResources([
@@ -51,6 +53,5 @@ Route::group([
             'sessions' => SessionController::class,
         ])
     );
-    Route::apiResource('users', UserController::class)->only(['index', 'update'])
-        ->middleware([TransformIndexRequest::class]);
+    Route::apiResource('users', UserController::class)->only(['index', 'update']);
 });

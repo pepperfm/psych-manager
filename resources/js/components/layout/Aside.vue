@@ -20,15 +20,13 @@
               <i class="el-icon-sunny"></i>
               <span slot="title">Psych Manager</span>
             </el-menu-item>
-          
-            <el-menu-item index="2" @click="toRoute('notifications')">
+
+            <el-menu-item index="2" @click="toRoute('clients')">
               <i class="el-icon-user"></i>
               <span slot="title">Клиенты</span>
             </el-menu-item>
 
-            
-
-            <el-menu-item index="11" @click="toRoute('actions')">
+            <el-menu-item index="3" @click="toRoute('sessions')">
               <i class="el-icon-chat-round"></i>
               <span slot="title">Сессии</span>
             </el-menu-item>

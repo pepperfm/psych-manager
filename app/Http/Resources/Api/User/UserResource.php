@@ -23,7 +23,7 @@ class UserResource extends JsonResource
             'email' => $this->email,
             'phone' => $this->phone,
             'gender' => $this->gender,
-            'categories' => $this->whenLoaded('categories')->pluck('id'),
+            'categories' => $this->categories->pluck('id'),
         ];
     }
 }

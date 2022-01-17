@@ -4,7 +4,12 @@ namespace App\Models;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
-use Illuminate\Database\Eloquent\{Builder, Casts\Attribute, SoftDeletes};
+use Illuminate\Database\Eloquent\{
+    Builder,
+    Casts\Attribute,
+    Relations\BelongsToMany,
+    SoftDeletes
+};
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -160,5 +165,13 @@ class User extends Authenticatable
     public function sessions(): HasMany
     {
         return $this->hasMany(Session::class, 'client_id', 'id');
+    }
+
+    /**
+     * @return BelongsToMany
+     */
+    public function categories(): BelongsToMany
+    {
+        return $this->belongsToMany(Category::class);
     }
 }

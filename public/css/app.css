@@ -32,7 +32,7 @@ body {
 
 .aside {
   transition: all 400ms ease-in-out;
-  background-color: rgb(52, 58, 64);
+  background-color: #343a40;
 }
 
 .el-submenu__title {
@@ -42,12 +42,15 @@ body {
 .el-menu.el-menu--horizontal {
   border-bottom: none;
 }
-.main-header {
-  height: 100%;
+
+.el-header {
+  border-bottom: 1px solid #dee2e6;
 }
+
 .main-nav-logo {
   border-bottom: 1px solid #4b545c;
 }
-.el-header {
-  border-bottom: 1px solid #dee2e6;
+
+.main-header {
+  height: 100%;
 }
