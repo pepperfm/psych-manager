@@ -2,7 +2,7 @@
      <el-aside
     id="sidebar"
     style="overflow-y: scroll"
-    class="hidden-sm-and-down aside shadow"
+    class="hidden-sm-and-down aside shadow-lg"
     :style="{ width: collapsed ? '64px' : '250px' }"
   >
     <el-row>
