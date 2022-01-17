@@ -21,7 +21,7 @@ class SessionUserScope implements Scope
      */
     public function apply(Builder $builder, Model $model): void
     {
-        $builder->where('doctor_id', '=', $this->id);
+        $builder->where('user_id', '=', $this->id);
     }
 }
 

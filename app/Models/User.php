@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Builders\FilterBuilder;
+use Illuminate\Database\Query\Builder as QueryBuilder;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 use Illuminate\Database\Eloquent\{
@@ -45,7 +47,7 @@ use App\Traits\PaginationTrait;
  */
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable, SoftDeletes, HasApiTokens, PaginationTrait;
+    use HasFactory, Notifiable, SoftDeletes, HasApiTokens;
 
     /**
      * @inheritdoc
@@ -82,45 +84,13 @@ class User extends Authenticatable
     }
 
     /**
-     * @param Builder $query
-     * @param $filters
+     * @param QueryBuilder $query
      *
-     * @return Builder
+     * @return FilterBuilder|QueryBuilder|Builder
      */
-    public function scopeWithFilters(Builder $query, $filters): Builder
+    public function newEloquentBuilder($query): FilterBuilder|QueryBuilder|Builder
     {
-        // $meetingType = !empty($filters->fields->meeting_type) || $filters->fields->meeting_type === 0;
-        // $categoryId = !empty($filters->fields->category_id) || $filters->fields->category_id === 0;
-        // $connectionType = !empty($filters->fields->connection_type) || $filters->fields->connection_type === 0;
-        //
-        // $query
-        //     ->when($meetingType, function ($q) use ($filters) {
-        //         return $q->where('meeting_type', $filters->fields->meeting_type);
-        //     })
-        //     ->when($categoryId, function ($q) use ($filters) {
-        //         return $q->where('category_id', $filters->fields->category_id);
-        //     })
-        //     ->when(!empty($filters->fields->name), function ($q) use ($filters) {
-        //         return $q->where('name', 'like', "%{$filters->fields->name}%");
-        //     })
-        //     ->when(!empty($filters->fields->email), function ($q) use ($filters) {
-        //         return $q->where('email', 'like', "%{$filters->fields->email}%");
-        //     })
-        //     ->when($connectionType, function ($q) use ($filters) {
-        //         return $q->whereHas('connectionType', function ($qq) use ($filters) {
-        //             return $qq->where('id', $filters->fields->connection_type);
-        //         });
-        //     })
-        //     ->when(!empty($filters->fields->phone), function ($q) use ($filters) {
-        //         return $q->where('phone', 'like', "%{$filters->fields->phone}%");
-        //     })
-        //     ->when(!empty($filters->fields->date_range), function ($q) use ($filters) {
-        //         $q->whereHas('sessions', function ($qq) use ($filters) {
-        //             return $qq->whereBetween('session_date', [$filters->fields->date_range[0], $filters->fields->date_range[1]]);
-        //         });
-        //     });
-        //
-        // return $query;
+        return new FilterBuilder($query);
     }
 
     /**

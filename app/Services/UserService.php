@@ -4,7 +4,7 @@ namespace App\Services;
 
 use Illuminate\Support\Collection;
 
-use App\Models\User;
+use App\Models\Client;
 
 class UserService
 {
@@ -16,10 +16,10 @@ class UserService
      */
     public function getUsersWithFilters($filters, &$total): Collection
     {
-        $users = User::with(['sessions', 'connectionType', 'therapy', 'category'])
-            ->withFilters($filters);
-        $total = $users->count();
+        $clients = Client::with(['sessions', 'connectionType', 'therapy', 'category'])
+            ->clientFilters($filters['fields']);
+        $total = $clients->count();
 
-        return $users->paginationApi($filters)->withTrashed()->oldest('deleted_at')->get();
+        return $clients->withPagination($filters['pagination'])->withTrashed()->oldest('deleted_at')->get();
     }
 }

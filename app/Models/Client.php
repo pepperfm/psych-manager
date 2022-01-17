@@ -33,14 +33,6 @@ class Client extends User
     }
 
     /**
-     * @return BelongsToMany
-     */
-    public function categories(): BelongsToMany
-    {
-        return $this->belongsToMany(Category::class);
-    }
-
-    /**
      * @return HasMany
      */
     public function latestSession(): HasMany

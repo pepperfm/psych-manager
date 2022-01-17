@@ -52,7 +52,7 @@ class ClientController extends Controller
      */
     public function index(Request $request, UserService $userService): JsonResponse
     {
-        $filters = $request->input('filters', []);
+        $filters = $request->input('options', []);
         $clients = $userService->getUsersWithFilters($filters, $total);
 
         return $this->json->response(['clients' => IndexResource::collection($clients), 'total' => $total]);
