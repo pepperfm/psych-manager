@@ -103,7 +103,7 @@ class FilterBuilder extends Builder
                 )
             )
             ->when($connectionType,
-                fn() => $this->whereHas('user',
+                fn() => $this->whereHas('client',
                     fn() => $this->whereHas('connectionType',
                         fn() => $this->where('id', $filters['connection_type'])
                     )
