@@ -189,6 +189,183 @@
                 ]
             }
         },
+        "/clients": {
+            "get": {
+                "tags": [
+                    "Клиенты"
+                ],
+                "summary": "Index page",
+                "operationId": "clients-index",
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ClientIndexResource"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Список пуст"
+                    }
+                },
+                "security": [
+                    {
+                        "X-ACCESS-TOKEN": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Клиенты"
+                ],
+                "summary": "Store",
+                "operationId": "clients-store",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ClientRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Клиент добавлен"
+                    },
+                    "500": {
+                        "description": "Ошибка создания"
+                    }
+                },
+                "security": [
+                    {
+                        "X-ACCESS-TOKEN": []
+                    }
+                ]
+            }
+        },
+        "/clients/{id}": {
+            "get": {
+                "tags": [
+                    "Клиенты"
+                ],
+                "summary": "Show page",
+                "operationId": "clients-show",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id пользователя",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ClientShowResource"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Клиент не найден"
+                    }
+                },
+                "security": [
+                    {
+                        "X-ACCESS-TOKEN": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Клиенты"
+                ],
+                "summary": "Update",
+                "operationId": "clients-update",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "allOf": [
+                                    {
+                                        "properties": {
+                                            "id": {
+                                                "type": "integer",
+                                                "example": 5
+                                            }
+                                        },
+                                        "type": "object"
+                                    },
+                                    {
+                                        "$ref": "#/components/schemas/ClientRequest"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Клиент обновлён"
+                    },
+                    "404": {
+                        "description": "Клиент не найден"
+                    }
+                },
+                "security": [
+                    {
+                        "X-ACCESS-TOKEN": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Клиенты"
+                ],
+                "summary": "Delete",
+                "operationId": "clients-delete",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id пользователя",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Клиент удалён"
+                    },
+                    "404": {
+                        "description": "Клиент не найден"
+                    },
+                    "500": {
+                        "description": "Ошибка удаления"
+                    }
+                },
+                "security": [
+                    {
+                        "X-ACCESS-TOKEN": []
+                    }
+                ]
+            }
+        },
         "/sessions": {
             "get": {
                 "tags": [
@@ -456,230 +633,13 @@
                 ]
             }
         },
-        "/users": {
-            "get": {
-                "tags": [
-                    "Пользователи"
-                ],
-                "summary": "Index page",
-                "operationId": "users-index",
-                "responses": {
-                    "200": {
-                        "description": "",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/UserIndexResource"
-                                }
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "Список пуст"
-                    }
-                },
-                "security": [
-                    {
-                        "X-ACCESS-TOKEN": []
-                    }
-                ]
-            },
-            "post": {
-                "tags": [
-                    "Пользователи"
-                ],
-                "summary": "Store",
-                "operationId": "users-store",
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/UserRequest"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "200": {
-                        "description": "Клиент добавлен"
-                    },
-                    "500": {
-                        "description": "Ошибка создания"
-                    }
-                },
-                "security": [
-                    {
-                        "X-ACCESS-TOKEN": []
-                    }
-                ]
-            }
-        },
-        "/users/{id}": {
-            "get": {
-                "tags": [
-                    "Пользователи"
-                ],
-                "summary": "Show page",
-                "operationId": "users-show",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "description": "id пользователя",
-                        "required": true,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/UserShowResource"
-                                }
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "Клиент не найден"
-                    }
-                },
-                "security": [
-                    {
-                        "X-ACCESS-TOKEN": []
-                    }
-                ]
-            },
-            "put": {
-                "tags": [
-                    "Пользователи"
-                ],
-                "summary": "Update",
-                "operationId": "users-update",
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "type": "object",
-                                "allOf": [
-                                    {
-                                        "properties": {
-                                            "id": {
-                                                "type": "integer",
-                                                "example": 5
-                                            }
-                                        },
-                                        "type": "object"
-                                    },
-                                    {
-                                        "$ref": "#/components/schemas/UserRequest"
-                                    }
-                                ]
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "200": {
-                        "description": "Клиент обновлён"
-                    },
-                    "404": {
-                        "description": "Клиент не найден"
-                    }
-                },
-                "security": [
-                    {
-                        "X-ACCESS-TOKEN": []
-                    }
-                ]
-            },
-            "delete": {
-                "tags": [
-                    "Пользователи"
-                ],
-                "summary": "Delete",
-                "operationId": "users-delete",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "description": "id пользователя",
-                        "required": true,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Пользователь удалён"
-                    },
-                    "404": {
-                        "description": "Пользователь не найден"
-                    },
-                    "500": {
-                        "description": "Ошибка удаления"
-                    }
-                },
-                "security": [
-                    {
-                        "X-ACCESS-TOKEN": []
-                    }
-                ]
-            }
-        },
-        "/auth": {
-            "post": {
-                "tags": [
-                    "Аутентификация"
-                ],
-                "summary": "Логин",
-                "operationId": "Auth",
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/AuthRequest"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "200": {
-                        "description": "Успешно",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "auth_token": {
-                                            "type": "string",
-                                            "example": "CyQaejvE9Tq2ykXW1aCz4aYpxU8OEpJngkVWjpHj"
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    },
-                    "422": {
-                        "description": "Введите email"
-                    }
-                }
-            }
-        },
         "/login-side": {
             "post": {
                 "tags": [
                     "oAuth"
                 ],
                 "summary": "Authentication by email",
-                "description": "\r\n\r\n    ### Example URI\r\n     **POST** https://your-website.com/api/v1/login-side",
+                "description": "\n\n    ### Example URI\n     **POST** https://your-website.com/api/v1/login-side",
                 "operationId": "oauth2.login.email",
                 "parameters": [
                     {
@@ -707,12 +667,12 @@
                                 ],
                                 "properties": {
                                     "username": {
-                                        "description": "User email.",
+                                        "description": "Client email.",
                                         "type": "string",
                                         "example": "some_user@flywert.com"
                                     },
                                     "password": {
-                                        "description": "User password.",
+                                        "description": "Client password.",
                                         "type": "string",
                                         "example": "some_user@flywert.com"
                                     },
@@ -745,20 +705,16 @@
                                 "schema": {
                                     "properties": {
                                         "token_type": {
-                                            "description": "Authorize a client to access the user's account.",
                                             "type": "string"
                                         },
                                         "expires_in": {
-                                            "description": "Authorize a client to access the user's account.",
                                             "type": "string",
                                             "format": "date-time"
                                         },
                                         "access_token": {
-                                            "description": "Authorize a client to access the user's account.",
                                             "type": "string"
                                         },
                                         "refresh_token": {
-                                            "description": "Authorize a client to access the user's account.",
                                             "type": "string"
                                         }
                                     },
@@ -785,7 +741,7 @@
                     "oAuth"
                 ],
                 "summary": "Authentication by email",
-                "description": "\r\n\r\n    ### Example URI\r\n     **POST** https://your-website.com/api/v1/login",
+                "description": "\n\n    ### Example URI\n     **POST** https://your-website.com/api/v1/login",
                 "operationId": "oauth2.login",
                 "requestBody": {
                     "required": true,
@@ -801,12 +757,12 @@
                                 ],
                                 "properties": {
                                     "email": {
-                                        "description": "User email.",
+                                        "description": "Client email.",
                                         "type": "string",
                                         "example": "mail@qwerty213.ru39"
                                     },
                                     "password": {
-                                        "description": "User password.",
+                                        "description": "Client password.",
                                         "type": "string",
                                         "example": "some_user@flywert.com"
                                     },
@@ -839,20 +795,16 @@
                                 "schema": {
                                     "properties": {
                                         "token_type": {
-                                            "description": "Authorize a client to access the user's account.",
                                             "type": "string"
                                         },
                                         "expires_in": {
-                                            "description": "Authorize a client to access the user's account.",
                                             "type": "string",
                                             "format": "date-time"
                                         },
                                         "access_token": {
-                                            "description": "Authorize a client to access the user's account.",
                                             "type": "string"
                                         },
                                         "refresh_token": {
-                                            "description": "Authorize a client to access the user's account.",
                                             "type": "string"
                                         }
                                     },
@@ -879,7 +831,7 @@
                     "oAuth"
                 ],
                 "summary": "Logout and Token Invalidation",
-                "description": "\r\n\r\n    Sending an request to logout endpoint with a valid API token will also invalidate that token.\r\n    ### Example URI\r\n     **GET** https://your-website.com/api/v1/logout-side",
+                "description": "\n\n    Sending an request to logout endpoint with a valid API token will also invalidate that token.\n    ### Example URI\n     **GET** https://your-website.com/api/v1/logout-side",
                 "operationId": "oauth2 logout",
                 "responses": {
                     "200": {
@@ -901,7 +853,24 @@
     },
     "components": {
         "schemas": {
+            "AuthRequest": {
+                "description": "Class AuthRequest",
+                "properties": {
+                    "email": {
+                        "description": "User email",
+                        "type": "string",
+                        "example": "admin@yandex.ru"
+                    },
+                    "password": {
+                        "description": "User password",
+                        "type": "string",
+                        "example": "123456"
+                    }
+                },
+                "type": "object"
+            },
             "CategoryRequest": {
+                "description": "Class CategoryRequest",
                 "properties": {
                     "name": {
                         "description": "Category name",
@@ -910,32 +879,8 @@
                 },
                 "type": "object"
             },
-            "SessionRequest": {
-                "properties": {
-                    "client_id": {
-                        "description": "Class SessionRequest",
-                        "type": "integer"
-                    },
-                    "doctor_id": {
-                        "description": "Class SessionRequest",
-                        "type": "integer"
-                    },
-                    "status": {
-                        "description": "Class SessionRequest",
-                        "type": "string"
-                    },
-                    "session_date": {
-                        "description": "date_format Y-m-d H:i:s",
-                        "type": "string"
-                    },
-                    "comment": {
-                        "description": "План на сессию",
-                        "type": "string"
-                    }
-                },
-                "type": "object"
-            },
-            "UserRequest": {
+            "ClientRequest": {
+                "description": "Class ClientRequest",
                 "properties": {
                     "name": {
                         "description": "Имя",
@@ -967,91 +912,39 @@
                 },
                 "type": "object"
             },
-            "AuthRequest": {
+            "SessionRequest": {
+                "description": "Class SessionRequest",
                 "properties": {
-                    "email": {
-                        "description": "User email",
-                        "type": "string",
-                        "example": "admin@yandex.ru"
-                    },
-                    "password": {
-                        "description": "User password",
-                        "type": "string",
-                        "example": "123456"
-                    }
-                },
-                "type": "object"
-            },
-            "SessionIndexResource": {
-                "properties": {
-                    "id": {
-                        "description": "Class IndexResource",
-                        "type": "string"
-                    },
-                    "name": {
-                        "description": "Class IndexResource",
-                        "type": "string"
-                    },
-                    "email": {
-                        "description": "Class IndexResource",
-                        "type": "string"
-                    },
-                    "connection_type": {
-                        "description": "id записи типа связи",
-                        "type": "integer"
-                    },
-                    "connection_type_string": {
-                        "description": "Имя записи типа связи",
-                        "type": "string"
-                    }
-                },
-                "type": "object"
-            },
-            "SessionShowResource": {
-                "properties": {
-                    "id": {
-                        "description": "Class ShowResource",
-                        "type": "integer"
-                    },
                     "client_id": {
-                        "description": "Class ShowResource",
                         "type": "integer"
                     },
-                    "client_name": {
-                        "description": "Class ShowResource",
-                        "type": "string"
-                    },
-                    "doctor_id": {
-                        "description": "Class ShowResource",
+                    "user_id": {
                         "type": "integer"
                     },
                     "status": {
-                        "description": "Class ShowResource",
-                        "type": "string"
-                    },
-                    "comment": {
-                        "description": "Комментарий/план на сессию",
                         "type": "string"
                     },
                     "session_date": {
-                        "description": "Дата встречи",
+                        "description": "date_format Y-m-d H:i:s",
+                        "type": "string"
+                    },
+                    "comment": {
+                        "description": "План на сессию",
                         "type": "string"
                     }
                 },
                 "type": "object"
             },
-            "UserIndexResource": {
+            "ClientIndexResource": {
+                "description": "Class IndexResource",
                 "properties": {
                     "id": {
-                        "description": "Class IndexResource",
                         "type": "string"
                     },
                     "name": {
-                        "description": "Class IndexResource",
                         "type": "string"
                     },
                     "email": {
-                        "description": "Class IndexResource",
                         "type": "string"
                     },
                     "connection_type": {
@@ -1066,20 +959,18 @@
                 },
                 "type": "object"
             },
-            "UserShowResource": {
+            "ClientShowResource": {
+                "description": "Class ShowResource",
                 "allOf": [
                     {
                         "properties": {
                             "id": {
-                                "description": "Class ShowResource",
                                 "type": "string"
                             },
                             "name": {
-                                "description": "Class ShowResource",
                                 "type": "string"
                             },
                             "email": {
-                                "description": "Class ShowResource",
                                 "type": "string"
                             },
                             "connection_type": {
@@ -1097,6 +988,55 @@
                         "$ref": "#/components/schemas/SessionIndexResource"
                     }
                 ]
+            },
+            "SessionIndexResource": {
+                "description": "Class IndexResource",
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "email": {
+                        "type": "string"
+                    },
+                    "connection_type": {
+                        "description": "id записи типа связи",
+                        "type": "integer"
+                    },
+                    "connection_type_string": {
+                        "description": "Имя записи типа связи",
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "SessionShowResource": {
+                "description": "Class ShowResource",
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "client_id": {
+                        "type": "integer"
+                    },
+                    "client_name": {
+                        "type": "string"
+                    },
+                    "doctor_id": {
+                        "type": "integer"
+                    },
+                    "comment": {
+                        "description": "Комментарий/план на сессию",
+                        "type": "string"
+                    },
+                    "session_date": {
+                        "description": "Дата встречи",
+                        "type": "string"
+                    }
+                },
+                "type": "object"
             }
         },
         "securitySchemes": {

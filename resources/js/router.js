@@ -11,6 +11,7 @@ import LoginHeader from "./components/login/LoginHeader"
 
 import Main from "./components/Main";
 import Clients from "./components/clients/Index"
+import Sessions from  "./components/sessions/Index"
 
 const routes = [
   {
@@ -40,7 +41,7 @@ const routes = [
   {
     path: '/sessions',
     name: 'sessions',
-    components: { aside: DefaultAside, header: DefaultHeader, default: Login },
+    components: { aside: DefaultAside, header: DefaultHeader, default: Sessions },
     meta: { auth: false, menuitem: '3' }
   },
 ]

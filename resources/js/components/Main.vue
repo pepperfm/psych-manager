@@ -6,6 +6,7 @@
     <div class="content">
       <div class="content-fluid">
         <p>Добро пожаловать!</p>
+
       </div>
     </div>
   </div>
