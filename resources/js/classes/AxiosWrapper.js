@@ -47,7 +47,7 @@ class AxiosWrapper {
   }
 
   onSuccess(response) {
-
+    console.log(response.data.data)
     return response;
   }
   onError(error) {
