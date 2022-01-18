@@ -37,6 +37,6 @@ class SessionService
         $now = Carbon::now();
         $date = Carbon::createFromDate($now->year, $now->month);
 
-        return Session::with(['client'])->whereDate('session_date', '>=', $date)->get();
+        return Session::q()->with(['client'])->whereDate('session_date', '>=', $date)->get();
     }
 }
