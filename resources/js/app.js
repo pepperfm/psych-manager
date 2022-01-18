@@ -5,6 +5,11 @@ import router from './router'
 import Identity from "./classes/Identity";
 import axios from "./classes/AxiosWrapper"
 
+// import VCalendar from 'v-calendar'
+import VueCal from 'vue-cal'
+import 'vue-cal/dist/vuecal.css'
+import 'vue-cal/dist/i18n/ru.js'
+
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 
@@ -16,8 +21,12 @@ import locale from 'element-ui/lib/locale'
 
 locale.use(lang)
 
+Vue.component('vue-cal', VueCal)
+
 Vue.use(VueRouter);
-Vue.use(ElementUI, { size: 'small'});
+Vue.use(ElementUI);
+// Vue.use(VCalendar);
+Vue.use(VueCal);
 
 async function init() {
   try {
