@@ -32,9 +32,9 @@ class CalendarResource extends JsonResource
 
             'name' => $this->whenLoaded('client')?->name,
             'phone' => $this->whenLoaded('client')?->phone,
-            'connection_type_string' => $this->whenLoaded('client')->connectionType?->name,
-            'connection_type_link' => $this->whenLoaded('client')->connection_type_link,
-            'meeting_type_icon' => $this->whenLoaded('client')->meeting_type ? 'el-icon-office-building' : 'el-icon-service',
+            'connection_type_string' => $this->whenLoaded('client')?->connectionType?->name,
+            'connection_type_link' => $this->whenLoaded('client')?->connection_type_link,
+            'meeting_type_icon' => $this->whenLoaded('client')?->meeting_type ? 'el-icon-office-building' : 'el-icon-service',
         ];
     }
 }

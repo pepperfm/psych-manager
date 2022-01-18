@@ -116,14 +116,14 @@
                 </tr>
                 <tr v-for="(session, index) in sessions" :key="index">
                   <td v-text="session.session_date"></td>
-                  <td><i :class="session.user.meeting_type_icon"></i></td>
+                  <td><i :class="session.client.meeting_type_icon"></i></td>
                   <td>
-                    <el-link :href="`/admin/users/#/view/${session.user.id}`" type="primary" target="_blank">
-                      {{ session.user.name }}
+                    <el-link :href="`/admin/users/#/view/${session.client.id}`" type="primary" target="_blank">
+                      {{ session.client.name }}
                     </el-link>
                   </td>
                   <td>
-                    <span v-if="!session.user.meeting_type">{{ session.user.connection_type_string }}</span>
+                    <span v-if="!session.client.meeting_type">{{ session.client.connection_type_string }}</span>
                   </td>
                   <td v-text="session.comment"></td>
                   <td class="actions">
@@ -219,9 +219,8 @@ export default {
       actions: {
         rest: '/api/v1/sessions',
         getCalendarSessions: '/api/v1/calendar-sessions',
-
-        getConnectionTypes: '/api/v1/static-data/get-connection-types',
-        getMeetingTypes: '/api/v1/static-data/get-meeting-types',
+        getConnectionTypes: '/api/v1/static-data/connection-types',
+        getMeetingTypes: '/api/v1/static-data/meeting-types',
       },
       filters: JSON.parse(JSON.stringify(FilterSession)),
       pickerOptions: {
