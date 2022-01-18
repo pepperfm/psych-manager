@@ -67,17 +67,18 @@ class FilterBuilder extends Builder
                 fn() => $this->where('email', 'like', "%{$filters['email']}%")
             )
             ->when($connectionType,
-                fn() => $this->whereHas('connectionType',
-                    fn() => $this->where('id', $filters['connection_type'])
-                )
+                fn() => $this->whereHas('connectionType', function ($q) use ($filters) {
+                    return $q->where('id', $filters['connection_type']);
+                })
             )
             ->when($filters['phone'] ?? false,
                 fn() => $this->where('phone', 'like', "%{$filters['phone']}%")
             )
             ->when($filters['date_range'] ?? false,
                 fn() => $this->whereHas('sessions',
-                    fn() => $this->whereBetween('session_date', [$filters['date_range'][0], $filters['date_range'][1]])
-                )
+                    function ($q) use ($filters) {
+                        return $q->whereBetween('session_date', [$filters['date_range'][0], $filters['date_range'][1]]);
+                    })
             );
 
         return $this;
@@ -98,21 +99,21 @@ class FilterBuilder extends Builder
                 fn() => $this->whereBetween('session_date', [$filters['date_range'][0], $filters['date_range'][1]])
             )
             ->when($meetingType,
-                fn() => $this->whereHas('client',
-                    fn() => $this->where('meeting_type', $filters['meeting_type'])
-                )
+                fn() => $this->whereHas('client', function ($q) use ($filters) {
+                    return $q->where('meeting_type', $filters['meeting_type']);
+                })
             )
             ->when($connectionType,
                 fn() => $this->whereHas('client',
-                    fn() => $this->whereHas('connectionType',
-                        fn() => $this->where('id', $filters['connection_type'])
-                    )
+                    fn() => $this->whereHas('connectionType', function ($q) use ($filters) {
+                        return $q->where('id', $filters['connection_type']);
+                    })
                 )
             )
             ->when($filters['user_name'] ?? false,
-                fn() => $this->whereHas('client',
-                    fn() => $this->where('name', 'like', "%{$filters['user_name']}%")
-                )
+                fn() => $this->whereHas('client', function ($q) use ($filters) {
+                    return $q->where('name', 'like', "%{$filters['user_name']}%");
+                })
             );
 
         return $this;
