@@ -82,4 +82,39 @@ class FilterBuilder extends Builder
 
         return $this;
     }
+
+    /**
+     * @param array $filters
+     *
+     * @return Builder
+     */
+    public function sessionFilters(array $filters = []): Builder
+    {
+        $meetingType = !empty($filters['meeting_type']) || $filters['meeting_type'] === 0;
+        $connectionType = !empty($filters['connection_type']) || $filters['connection_type'] === 0;
+
+        $this
+            ->when($filters['date_range'] ?? false,
+                fn() => $this->whereBetween('session_date', [$filters['date_range'][0], $filters['date_range'][1]])
+            )
+            ->when($meetingType,
+                fn() => $this->whereHas('user',
+                    fn() => $this->where('meeting_type', $filters['meeting_type'])
+                )
+            )
+            ->when($connectionType,
+                fn() => $this->whereHas('user',
+                    fn() => $this->whereHas('connectionType',
+                        fn() => $this->where('id', $filters['connection_type'])
+                    )
+                )
+            )
+            ->when($filters['user_name'] ?? false,
+                fn() => $this->whereHas('user',
+                    fn() => $this->where('name', 'like', "%{$filters['user_name']}%")
+                )
+            );
+
+        return $this;
+    }
 }

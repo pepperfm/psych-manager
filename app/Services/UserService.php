@@ -17,9 +17,12 @@ class UserService
     public function getUsersWithFilters($filters, &$total): Collection
     {
         $clients = Client::with(['sessions', 'connectionType', 'therapy', 'category'])
-            ->clientFilters($filters['fields']);
+            ->clientFilters($filters['fields'] ?? []);
         $total = $clients->count();
 
-        return $clients->withPagination($filters['pagination'])->withTrashed()->oldest('deleted_at')->get();
+        return $clients->withPagination($filters['pagination'] ?? [])
+            ->withTrashed()
+            ->oldest('deleted_at')
+            ->get();
     }
 }

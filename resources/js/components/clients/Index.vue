@@ -294,7 +294,7 @@ export default {
       try {
         await this.saveFilters()
 
-        let response = await this.$http.get(this.actions.rest, {params: {options: this.filters}})
+        let response = await this.$http.get(this.actions.rest, { params: { options: this.filters }})
         this.clients = response.data.data.clients
         this.total = response.data.data.total
         this.loading = false
@@ -386,7 +386,7 @@ export default {
       this.fieldsDialogIsVisible = false
     },
   }
-  
+
 };
 </script>
 

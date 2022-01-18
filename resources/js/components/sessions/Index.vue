@@ -8,13 +8,13 @@
           </div>
           <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-xs-12 text-right">
             <el-pagination
-                background
-                layout="total, prev, pager, next"
-                :current-page="filters.pagination.page"
-                :page-size="filters.pagination.limit"
-                @current-change="handleCurrentChange"
-                @size-change="handleSizeChange"
-                :total="total"
+              background
+              layout="total, prev, pager, next"
+              :current-page="filters.pagination.page"
+              :page-size="filters.pagination.limit"
+              @current-change="handleCurrentChange"
+              @size-change="handleSizeChange"
+              :total="total"
             >
             </el-pagination>
           </div>
@@ -30,9 +30,9 @@
                   <th @click="sorting('session_date')" class="clickable" width="10%">
                     Дата сессии
                     <i
-                        v-if="filters.sort.field === 'session_date'"
-                        class="pull-right fa"
-                        v-bind:class="{
+                      v-if="filters.sort.field === 'session_date'"
+                      class="pull-right fa"
+                      v-bind:class="{
                         'fas fa-sort-amount-down-alt': !filters.sort.order,
                         'fas fa-sort-amount-up' : filters.sort.order
                       }"></i>
@@ -42,9 +42,9 @@
                   <th width="15%">
                     Способ связи
                     <i
-                        v-if="filters.sort.field === 'status'"
-                        class="pull-right fa"
-                        v-bind:class="{
+                      v-if="filters.sort.field === 'status'"
+                      class="pull-right fa"
+                      v-bind:class="{
                         'fas fa-sort-amount-down-alt': !filters.sort.order,
                         'fas fa-sort-amount-up' : filters.sort.order
                       }"></i>
@@ -57,52 +57,51 @@
                 <tr>
                   <td class="search--field">
                     <el-date-picker
-                        v-model="filters.fields.date_range"
-                        type="daterange"
-                        format="dd.MM.yyyy – HH:mm"
-                        value-format="yyyy-MM-dd HH:mm"
-                        unlink-panels
-                        range-separator="-"
-                        start-placeholder="Искать С этой даты"
-                        end-placeholder="По эту дату"
-                        @change="getRecords()"
-                        size="small"
-                        :picker-options="pickerOptions">
+                      v-model="filters.fields.date_range"
+                      type="daterange"
+                      format="dd.MM.yyyy – HH:mm"
+                      value-format="yyyy-MM-dd HH:mm"
+                      unlink-panels
+                      range-separator="-"
+                      start-placeholder="Искать С этой даты"
+                      end-placeholder="По эту дату"
+                      @change="getRecords()"
+                      size="small"
+                      :picker-options="pickerOptions">
                     </el-date-picker>
                   </td>
                   <td class="search--field">
                     <el-select
-                        v-model="filters.fields.meeting_type"
-                        placeholder="Выберите формат"
-                        clearable
-                        size="small"
-                        @input="getRecords()"
+                      v-model="filters.fields.meeting_type"
+                      placeholder="Выберите формат"
+                      clearable
+                      size="small"
+                      @input="getRecords()"
                     >
                       <el-option
-                          v-for="item in meeting_types"
-                          :key=item.id
-                          :label="item.name"
-                          :value="item.id">
+                        v-for="item in meeting_types"
+                        :key=item.id
+                        :label="item.name"
+                        :value="item.id">
                       </el-option>
                     </el-select>
                   </td>
                   <td class="search--field">
-                    <el-input placeholder="Введите имя" v-model="filters.fields.user_name" size="small"
-                              @input="getRecords()" clearable></el-input>
+                    <el-input placeholder="Введите имя" v-model="filters.fields.user_name" size="small" @input="getRecords()" clearable></el-input>
                   </td>
                   <td class="search--field">
                     <el-select
-                        v-model="filters.fields.connection_type"
-                        placeholder="Выберите способ"
-                        clearable
-                        size="small"
-                        @input="getRecords()"
+                      v-model="filters.fields.connection_type"
+                      placeholder="Выберите способ"
+                      clearable
+                      size="small"
+                      @input="getRecords()"
                     >
                       <el-option
-                          v-for="item in connection_types"
-                          :key=item.id
-                          :label="item.name"
-                          :value="item.id">
+                        v-for="item in connection_types"
+                        :key=item.id
+                        :label="item.name"
+                        :value="item.id">
                       </el-option>
                     </el-select>
                   </td>
@@ -128,24 +127,24 @@
                   <td v-text="session.comment"></td>
                   <td class="actions">
                     <el-button
-                        size="mini"
-                        type="warning"
-                        plain
-                        icon="el-icon-edit"
-                        @click="edit(session)">
+                      size="mini"
+                      type="warning"
+                      plain
+                      icon="el-icon-edit"
+                      @click="edit(session)">
                     </el-button>
                     <el-popconfirm
-                        title="Точно?"
-                        confirm-button-text="Да"
-                        cancel-button-text="Нет"
-                        @confirm="remove(session)"
+                      title="Точно?"
+                      confirm-button-text="Да"
+                      cancel-button-text="Нет"
+                      @confirm="remove(session)"
                     >
                       <el-button
-                          size="mini"
-                          type="danger"
-                          plain
-                          slot="reference"
-                          icon="el-icon-delete">
+                        size="mini"
+                        type="danger"
+                        plain
+                        slot="reference"
+                        icon="el-icon-delete">
                       </el-button>
                     </el-popconfirm>
                   </td>
@@ -156,18 +155,18 @@
 
           <el-tab-pane label="Календарь">
             <vue-cal
-                class="vuecal--blue-theme"
-                style="height: 90vh"
-                :time-from="9 * 60"
-                :time-to="22 * 60 + 15"
-                :time-step="30"
-                active-view="month"
-                click-to-navigate
-                :disable-views="['years', 'year']"
-                locale="ru"
-                :events="calendarSessions"
-                events-on-month-view="short"
-                :on-event-click="onEventClick"
+              class="vuecal--blue-theme"
+              style="height: 90vh"
+              :time-from="9 * 60"
+              :time-to="22 * 60 + 15"
+              :time-step="30"
+              active-view="month"
+              click-to-navigate
+              :disable-views="['years', 'year']"
+              locale="ru"
+              :events="calendarSessions"
+              events-on-month-view="short"
+              :on-event-click="onEventClick"
             >
             </vue-cal>
             <el-dialog :title="calendarItem.name" :visible.sync="showCalendarEvent">
@@ -284,7 +283,7 @@ export default {
       try {
         this.saveFilters()
 
-        let response = await this.$http.get(this.actions.rest, {params: {filters: this.filters}})
+        let response = await this.$http.get(this.actions.rest, { params: { options: this.filters }})
         this.sessions = response.data.data.sessions
         this.total = response.data.data.total
         this.loading = false
