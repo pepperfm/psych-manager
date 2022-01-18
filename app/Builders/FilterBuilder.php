@@ -98,7 +98,7 @@ class FilterBuilder extends Builder
                 fn() => $this->whereBetween('session_date', [$filters['date_range'][0], $filters['date_range'][1]])
             )
             ->when($meetingType,
-                fn() => $this->whereHas('user',
+                fn() => $this->whereHas('client',
                     fn() => $this->where('meeting_type', $filters['meeting_type'])
                 )
             )
@@ -110,7 +110,7 @@ class FilterBuilder extends Builder
                 )
             )
             ->when($filters['user_name'] ?? false,
-                fn() => $this->whereHas('user',
+                fn() => $this->whereHas('client',
                     fn() => $this->where('name', 'like', "%{$filters['user_name']}%")
                 )
             );
