@@ -1,3 +1,5 @@
+import Client from "../../clients/models/Client";
+
 export default {
     id: '',
     user_id: '',
@@ -6,5 +8,5 @@ export default {
     comment: '',
     session_date: '',
     session_time: '',
-    client: {}
+    client: JSON.parse(JSON.stringify(Client))
 }
