@@ -104,11 +104,11 @@ class FilterBuilder extends Builder
                 })
             )
             ->when($connectionType,
-                fn() => $this->whereHas('client',
-                    fn() => $this->whereHas('connectionType', function ($q) use ($filters) {
-                        return $q->where('id', $filters['connection_type']);
-                    })
-                )
+                fn() => $this->whereHas('client', function ($q) use ($filters) {
+                    return $q->whereHas('connectionType', function ($qq) use ($filters) {
+                        return $qq->where('id', $filters['connection_type']);
+                    });
+                })
             )
             ->when($filters['user_name'] ?? false,
                 fn() => $this->whereHas('client', function ($q) use ($filters) {
