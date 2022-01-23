@@ -11,6 +11,7 @@ import LoginHeader from "./components/login/LoginHeader"
 
 import Main from "./components/Main";
 import Clients from "./components/clients/Index"
+import ClientForm from "./components/clients/Form"
 import Sessions from  "./components/sessions/Index"
 
 const routes = [
@@ -44,6 +45,18 @@ const routes = [
     components: { aside: DefaultAside, header: DefaultHeader, default: Sessions },
     meta: { auth: false, menuitem: '3' }
   },
+  {
+    path: '/clients/:id',
+    name: 'clients.update',
+    components: { aside: DefaultAside, header: DefaultHeader, default: ClientForm },
+    meta: { auth: true, menuitem: '4-2' }
+  },
+  {
+    path: '/create',
+    name: 'create',
+    components: { aside: DefaultAside, header: DefaultHeader, default: ClientForm },
+    meta: { auth: true, menuitem: '4-2' }
+  },
 ]
 
 const router = new VueRouter({
@@ -67,6 +80,7 @@ router.beforeEach((to, from, next) => {
     next();
   }
 });
+
 //  Fix error NavigationDuplicated second option
 const originalPush = VueRouter.prototype.push;
 VueRouter.prototype.push = function push(location) {
