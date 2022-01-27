@@ -4,6 +4,8 @@ namespace App\Services;
 
 use Illuminate\Support\Collection;
 
+use App\Builders\FilterBuilder;
+
 use App\Models\Client;
 
 class UserService
@@ -16,11 +18,12 @@ class UserService
      */
     public function getUsersWithFilters($filters, &$total): Collection
     {
-        $clients = Client::with(['sessions', 'connectionType', 'therapy', 'category'])
+        /** @var FilterBuilder $clientsQ */
+        $clientsQ = Client::query()->with(['sessions', 'connectionType', 'therapy', 'category'])
             ->clientFilters($filters['fields'] ?? []);
-        $total = $clients->count();
+        $total = $clientsQ->count();
 
-        return $clients->withPagination($filters['pagination'] ?? [])
+        return $clientsQ->withPagination($filters['pagination'] ?? [])
             ->withTrashed()
             ->oldest('deleted_at')
             ->get();

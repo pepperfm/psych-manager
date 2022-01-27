@@ -5,7 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Relations\{
     BelongsTo, BelongsToMany, HasMany, HasOne
 };
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Query\Builder as QueryBuilder;
+
+use App\Builders\FilterBuilder;
 
 class Client extends User
 {
@@ -23,6 +27,16 @@ class Client extends User
         'name', 'email', 'password', 'phone', 'birthday_date', 'gender',
         'role', 'meeting_type', 'connection_type', 'connection_type_link', 'curator_contacts',
     ];
+
+    /**
+     * @param QueryBuilder $query
+     *
+     * @return FilterBuilder|QueryBuilder|Builder
+     */
+    public function newEloquentBuilder($query): FilterBuilder|QueryBuilder|Builder
+    {
+        return new FilterBuilder($query);
+    }
 
     /**
      * @return BelongsTo
