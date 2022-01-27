@@ -2,8 +2,6 @@
 
 namespace App\Models;
 
-use App\Builders\FilterBuilder;
-use Illuminate\Database\Query\Builder as QueryBuilder;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 use Illuminate\Database\Eloquent\{
@@ -13,7 +11,6 @@ use Illuminate\Database\Eloquent\{
     SoftDeletes
 };
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\{
@@ -23,9 +20,7 @@ use Illuminate\Support\{
 
 use Laravel\Passport\HasApiTokens;
 
-use App\Models\Scopes\SessionUserScope;
 use App\Helpers\PhoneHelper;
-use App\Traits\PaginationTrait;
 
 /**
  * Class User
@@ -47,7 +42,7 @@ use App\Traits\PaginationTrait;
  */
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable, SoftDeletes, HasApiTokens;
+    use Notifiable, SoftDeletes, HasApiTokens;
 
     /**
      * @inheritdoc
@@ -81,16 +76,6 @@ class User extends Authenticatable
     protected static function booted(): void
     {
         // static::addGlobalScope(new SessionUserScope(Auth::id() ?? 1));
-    }
-
-    /**
-     * @param QueryBuilder $query
-     *
-     * @return FilterBuilder|QueryBuilder|Builder
-     */
-    public function newEloquentBuilder($query): FilterBuilder|QueryBuilder|Builder
-    {
-        return new FilterBuilder($query);
     }
 
     /**

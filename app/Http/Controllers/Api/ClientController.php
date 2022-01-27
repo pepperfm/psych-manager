@@ -15,7 +15,7 @@ use App\Contracts\ResponseContract;
 
 use App\Services\UserService;
 
-use App\Models\{ ConnectionType, Category, Client };
+use App\Models\{ClientTherapy, ConnectionType, Category, Client};
 
 class ClientController extends Controller
 {
