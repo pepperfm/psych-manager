@@ -4,7 +4,7 @@
           <i :class="[ 'fas fa-bars',  {'rotate': toggled },'burger']"></i
         ></div>
        <el-dropdown @command="handleCommand">
-        <span class="currentUser" >{{ currentUser }}</span>
+        <span class="currentUser" >{{ user.name }}</span>
         <el-dropdown-menu slot="dropdown">
           <el-dropdown-item command="profile">Профиль</el-dropdown-item>
           <el-dropdown-item>Выход</el-dropdown-item>
@@ -21,14 +21,10 @@ export default {
       pathName: "Psych Manager",
       toggled: false,
       toggled2: true,
-      currentUser: '',
-      actions: {
-        rest: '/api/v1/users',
-      },
+      user: $identity,
     };
   },
   async created() {
-    await this.getCurrentUser();
     this.$root.$on("set-path-name", (obj) => {
       this.pathName = obj.name;
       this.activeIndex = obj.activeIndex ? obj.activeIndex : "1";
@@ -38,10 +34,6 @@ export default {
     });
   },
   methods: {
-    async getCurrentUser() {
-      let response = await this.$http.get(this.actions.rest)
-      this.currentUser = response.data.data.user.name;
-    },
     toggleIcon() {
       this.toggled = !this.toggled;
     },
