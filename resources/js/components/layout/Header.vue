@@ -23,7 +23,7 @@ export default {
       toggled2: true,
       currentUser: '',
       actions: {
-        rest: '/api/v1/user',
+        rest: '/api/v1/users',
       },
     };
   },
@@ -40,7 +40,7 @@ export default {
   methods: {
     async getCurrentUser() {
       let response = await this.$http.get(this.actions.rest)
-      this.currentUser = response.data.data.name;
+      this.currentUser = response.data.data.user.name;
     },
 
       toogleIcon(){
