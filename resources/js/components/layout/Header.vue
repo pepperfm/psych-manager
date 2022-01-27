@@ -3,11 +3,10 @@
         <div index="2" @click="toggleCollapse(); toogleIcon()">
           <i :class="[ 'fas fa-bars',  {'rotate': toggled },'burger']"></i
         ></div>
-      <div>2</div>
-       <el-dropdown>
-        <span>Current User</span>
+       <el-dropdown @command="handleCommand">
+        <span class="currentUser" >{{ currentUser }}</span>
         <el-dropdown-menu slot="dropdown">
-          <el-dropdown-item>Профиль</el-dropdown-item>
+          <el-dropdown-item command="profile">Профиль</el-dropdown-item>
           <el-dropdown-item>Выход</el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
@@ -22,9 +21,14 @@ export default {
       pathName: "Psych Manager",
       toggled: false,
       toggled2: true,
+      currentUser: '',
+      actions: {
+        rest: '/api/v1/user',
+      },
     };
   },
-  created() {
+  async created() {
+    await this.getCurrentUser();
     this.$root.$on("set-path-name", (obj) => {
       this.pathName = obj.name;
       this.activeIndex = obj.activeIndex ? obj.activeIndex : "1";
@@ -34,7 +38,11 @@ export default {
     });
   },
   methods: {
-      
+    async getCurrentUser() {
+      let response = await this.$http.get(this.actions.rest)
+      this.currentUser = response.data.data.name;
+    },
+
       toogleIcon(){
       this.toggled = !this.toggled;
      },
@@ -47,6 +55,9 @@ export default {
       // this.$identity.deauth()
       // window.$identity.deauth()
       this.$router.push({ name: "login" });
+    },
+    handleCommand(command) {
+      this.$router.push(command)
     },
   },
 };

@@ -339,7 +339,7 @@ export default {
           response = await this.$http.post(this.actions.rest, this.client)
         }
         this.$message.success(response.data.message)
-        await this.$router.push({name: '/clients'})
+        await this.$router.push({name: 'clients'})
       } catch (e) {
         if (!e.response) {
           throw e
@@ -357,7 +357,8 @@ export default {
     },
 
     backToIndex() {
-      this.$router.push({name: 'clients'})
+      // this.$router.push({name: 'clients'})
+      this.$router.go(-1)
     },
   }
 }

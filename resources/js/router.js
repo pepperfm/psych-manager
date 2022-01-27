@@ -13,6 +13,7 @@ import Main from "./components/Main";
 import Clients from "./components/clients/Index"
 import ClientForm from "./components/clients/Form"
 import Sessions from  "./components/sessions/Index"
+import Profile from  "./components/profile/Form"
 
 const routes = [
   {
@@ -46,15 +47,27 @@ const routes = [
     meta: { auth: false, menuitem: '3' }
   },
   {
+    path: '/sessions/:id',
+    name: 'sessions.update',
+    components: { aside: DefaultAside, header: DefaultHeader, default: ClientForm },
+    meta: { auth: true, menuitem: '4-3' }
+  },
+  {
     path: '/clients/:id',
     name: 'clients.update',
     components: { aside: DefaultAside, header: DefaultHeader, default: ClientForm },
-    meta: { auth: true, menuitem: '4-2' }
+    meta: { auth: true, menuitem: '4-4' }
   },
   {
     path: '/create',
     name: 'create',
     components: { aside: DefaultAside, header: DefaultHeader, default: ClientForm },
+    meta: { auth: true, menuitem: '4-2' }
+  },
+  {
+    path: '/profile',
+    name: 'profile',
+    components: { aside: DefaultAside, header: DefaultHeader, default: Profile },
     meta: { auth: true, menuitem: '4-2' }
   },
 ]
