@@ -36,7 +36,7 @@ async function init() {
       withCredentials: true,
       headers: headers,
     })
-    window.$identity = Vue.prototype.$identity = new Identity(response.data)
+    window.$identity = Vue.prototype.$identity = new Identity(response.data.data.user)
   } catch (e) {
     console.log(e);
     if (!e.response) {

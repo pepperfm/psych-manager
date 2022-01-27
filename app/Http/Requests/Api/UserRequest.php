@@ -4,8 +4,6 @@ namespace App\Http\Requests\Api;
 
 use Illuminate\Validation\Rule;
 
-use App\Enums\GenderEnum;
-
 use App\Models\Client;
 
 class UserRequest extends BaseApiRequest
@@ -25,7 +23,7 @@ class UserRequest extends BaseApiRequest
         return [
             'name' => ['required', 'string', 'max:255'],
             // todo: check this
-            'gender' => ['required', Rule::in(GenderEnum::cases())],
+            'gender' => ['required', 'nullable', 'boolean'],
             'connection_type_link' => $this->connectionTypeLink,
         ];
     }
