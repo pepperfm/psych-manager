@@ -13,13 +13,16 @@ use App\Http\Resources\Api\Client\{ IndexResource, ShowResource };
 
 use App\Contracts\ResponseContract;
 
-use App\Services\UserService;
+use App\Services\ClientService;
 
 use App\Models\{ClientTherapy, ConnectionType, Category, Client};
 
 class ClientController extends Controller
 {
-    public function __construct(protected ResponseContract $json) {}
+    public function __construct(
+        protected ResponseContract $json,
+        protected ClientService $clientService
+    ) {}
 
     /**
      * @OA\Get(
@@ -46,14 +49,12 @@ class ClientController extends Controller
      *
      * @param Request $request
      *
-     * @param UserService $userService
-     *
      * @return JsonResponse
      */
-    public function index(Request $request, UserService $userService): JsonResponse
+    public function index(Request $request): JsonResponse
     {
         $filters = $request->input('options', []);
-        $clients = $userService->getUsersWithFilters($filters, $total);
+        $clients = $this->clientService->getUsersWithFilters($filters, $total);
 
         return $this->json->response(['clients' => IndexResource::collection($clients), 'total' => $total]);
     }
@@ -89,39 +90,21 @@ class ClientController extends Controller
      *
      * @param ClientRequest $request
      *
+     * @throws \Throwable
      * @return JsonResponse
      */
     public function store(ClientRequest $request): JsonResponse
     {
-        $client = new Client($request->validated());
-        $connectionType = ConnectionType::find($request->getConnectionType());
-        $category = Category::find($request->getCategoryId());
+        try {
+            DB::beginTransaction();
 
-        $client->user()->associate(Auth::user());
-        $client->category()->associate($category);
-        $connectionType->clients()->save($client);
+            $this->clientService->save($request, Auth::user());
 
-        $therapy = ClientTherapy::n()
-            ->setProblemSeverity($request->input('therapy.problem_severity'))
-            ->setPlan($request->input('therapy.plan'))
-            ->setRequest($request->input('therapy.request'))
-            ->setNotes($request->input('notes'))
-            ->setConceptVision($request->input('concept_vision'));
-        // ([
-        //     'problem_severity' => $request->input('therapy.problem_severity'),
-        //     'plan' => $request->input('therapy.plan'),
-        //     'request' => $request->input('therapy.request'),
-        //     'notes' => $request->input('notes'),
-        //     'concept_vision' => $request->input('concept_vision'),
-        // ]);
-        if (!$client->save()) {
-            return $this->json->error('Ошибка сохранения клиента');
-        }
+            DB::commit();
+        } catch (\Throwable $e) {
+            DB::rollBack();
 
-        $therapy->client()->associate($client);
-
-        if (!$therapy->save()) {
-            return $this->json->error('Ошибка создания данных терапии');
+            return $this->json->response([], $e->getMessage(), $e->getCode());
         }
 
         return $this->json->response([], 'Клиент добавлен', JsonResponse::HTTP_CREATED);
