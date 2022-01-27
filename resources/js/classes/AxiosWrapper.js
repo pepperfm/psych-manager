@@ -46,7 +46,9 @@ class AxiosWrapper {
     this.onError = this.onError.bind(this);
   }
 
-  onSuccess(response) {}
+  onSuccess(response) {
+    return response;
+  }
   onError(error) {
     // FIXME подумать над тем, когда падает авторизация
     if (error.response.status === 401 || error.response.status === 403) {
