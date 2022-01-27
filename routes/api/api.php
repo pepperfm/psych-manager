@@ -13,8 +13,6 @@ use App\Http\Controllers\Api\{
 
 use App\Http\Controllers\Api\StaticDataController;
 
-use App\Http\Resources\Api\User\UserResource;
-
 /**
  * Unauthorized
  */
@@ -40,8 +38,6 @@ Route::group([
         Route::get('categories', [StaticDataController::class, 'getCategories']);
         Route::get('clients-all', [StaticDataController::class, 'getClients']);
     });
-
-    Route::get('user', static fn() => UserResource::make(UserResource::make(\Auth::user())));
 
     Route::get('calendar-sessions', [SessionController::class, 'getCalendarSessions']);
     Route::post('users/sync-categories', [UserController::class, 'syncCategories']);
