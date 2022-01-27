@@ -23,7 +23,7 @@ class UserController extends Controller
      */
     public function index(): JsonResponse
     {
-        $user = User::find(\Auth::id())->load(['categories']);
+        $user = User::find(\Auth::id())?->load(['categories']);
 
         return $this->json->response(['user' => UserResource::make($user)]);
     }
@@ -37,7 +37,7 @@ class UserController extends Controller
      */
     public function syncCategories(CategoryRequest $request): JsonResponse
     {
-        \Auth::user()->categories()->sync($request->input('categories'));
+        \Auth::user()?->categories()->sync($request->input('categories'));
 
         return $this->json->response([], 'Сохранено', JsonResponse::HTTP_CREATED);
     }
