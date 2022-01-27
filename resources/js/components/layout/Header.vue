@@ -1,6 +1,6 @@
 <template>
     <nav class="main-header navbar d-flex">
-        <div index="2" @click="toggleCollapse(), toogleIcon()">
+        <div index="2" @click="toggleCollapse(); toogleIcon()">
           <i :class="[ 'fas fa-bars',  {'rotate': toggled },'burger']"></i
         ></div>
       <div>2</div>

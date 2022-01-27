@@ -272,6 +272,7 @@ export default {
         }
       }]
     },
+    moduleName: 'clients',
     clients: [],
     client: {},
     connection_types: [],
@@ -330,8 +331,8 @@ export default {
       console.log(response.data.data);
     },
 
-    async edit(client) {
-      await this.$router.push({name: 'update', params: {id: client.id}})
+    async edit(model) {
+      await this.$router.push({name: `${this.moduleName}.update`, params: { id: model.id }})
     },
 
     async create() {

@@ -18,19 +18,11 @@ body {
   height: auto;
 }
 
-.el-main {
-  padding: 20px 30px 0;
-}
-
 .main-container {
   display: flex;
   height: auto;
-  padding: 0;
   min-height: 100vh;
   background: #f4f6f9;
-}
-.main-container .col-12 {
-  padding: 20px;
 }
 
 .aside {
@@ -63,7 +55,7 @@ body {
   background-color: #fff;
 }
 
-.row div:nth-child(2) {
+.card-header .row div:nth-child(2) {
   text-align: right !important;
 }
 
