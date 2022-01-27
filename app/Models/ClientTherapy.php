@@ -97,6 +97,6 @@ class ClientTherapy extends BaseModel
      */
     public function client(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'user_id', 'id');
+        return $this->belongsTo(User::class, 'client_id', 'id');
     }
 }

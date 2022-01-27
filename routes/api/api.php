@@ -41,7 +41,7 @@ Route::group([
         Route::get('clients-all', [StaticDataController::class, 'getClients']);
     });
 
-    Route::get('user', static fn() => UserResource::make(\Auth::user()));
+    Route::get('user', static fn() => UserResource::make(UserResource::make(\Auth::user())));
 
     Route::get('calendar-sessions', [SessionController::class, 'getCalendarSessions']);
     Route::post('users/sync-categories', [UserController::class, 'syncCategories']);
