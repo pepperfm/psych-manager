@@ -257,6 +257,7 @@ export default {
           }
         }]
       },
+      moduleName: 'sessions',
       sessions: [],
       calendarSessions: [],
       meeting_types: [],
@@ -316,8 +317,8 @@ export default {
       this.$localStorage.setItem(this.saveSessionAlias, JSON.stringify(this.filters))
     },
 
-    async edit(session) {
-      await this.$router.push({name: 'update', params: {id: session.id}})
+    async edit(model) {
+      await this.$router.push({name: `${this.moduleName}.update`, params: { id: model.id }})
     },
 
     async create() {

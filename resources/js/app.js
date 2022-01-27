@@ -32,7 +32,7 @@ async function init() {
   try {
     let token = localStorage.getItem('accessToken')
     let headers = { Pragma: 'no-cache', Authorization: `Bearer ${token}` }
-    let response = await axios.get('/api/v1/user', {
+    let response = await axios.get('/api/v1/users', {
       withCredentials: true,
       headers: headers,
     })
