@@ -23,7 +23,7 @@ class UserRequest extends BaseApiRequest
         return [
             'name' => ['required', 'string', 'max:255'],
             // todo: check this
-            'gender' => ['required', 'nullable', 'boolean'],
+            'gender' => ['sometimes', 'nullable', 'boolean'],
             'connection_type_link' => $this->connectionTypeLink,
         ];
     }
