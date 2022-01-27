@@ -1,6 +1,6 @@
 <template>
     <nav class="main-header navbar d-flex">
-        <div index="2" @click="toggleCollapse(); toogleIcon()">
+        <div index="2" @click="toggleCollapse(); toggleIcon()">
           <i :class="[ 'fas fa-bars',  {'rotate': toggled },'burger']"></i
         ></div>
        <el-dropdown @command="handleCommand">
@@ -42,19 +42,17 @@ export default {
       let response = await this.$http.get(this.actions.rest)
       this.currentUser = response.data.data.user.name;
     },
-
-      toogleIcon(){
+    toggleIcon() {
       this.toggled = !this.toggled;
-     },
-   
+    },
     toggleCollapse() {
       this.$root.$emit("collapse-toggle", {});
     },
     exit() {
-      localStorage.setItem("access_token", "");
+      localStorage.setItem("accessToken", "");
       // this.$identity.deauth()
       // window.$identity.deauth()
-      this.$router.push({ name: "login" });
+      this.$router.push({name: "login"});
     },
     handleCommand(command) {
       this.$router.push(command)
