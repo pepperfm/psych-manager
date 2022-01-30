@@ -83,9 +83,9 @@ export default {
         let response = await this.$http.post(this.actions.auth, this.loginForm)
         localStorage.setItem('accessToken', response.data.access_token)
 
-        let redirect = this.$route.query.redirect ? this.$route.query.redirect : '/'
-        await this.$router.push(redirect)
-        // await this.$router.push({ name: 'main'})
+        // let redirect = this.$route.query.redirect ? this.$route.query.redirect : '/'
+        // await this.$router.push(redirect)
+        await this.$router.push({ name: 'main'})
         await this.$message.success(response.data.message);
       } catch (e) {
         if (!e.response) {

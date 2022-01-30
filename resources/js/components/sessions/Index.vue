@@ -33,7 +33,7 @@
                       v-if="filters.sort.field === 'session_date'"
                       class="pull-right fa"
                       v-bind:class="{
-                        'fas fa-sort-amount-down-alt': !filters.sort.order,
+                        'fas fa-sort-amount-down': !filters.sort.order,
                         'fas fa-sort-amount-up' : filters.sort.order
                       }"></i>
                   </th>
@@ -45,7 +45,7 @@
                       v-if="filters.sort.field === 'status'"
                       class="pull-right fa"
                       v-bind:class="{
-                        'fas fa-sort-amount-down-alt': !filters.sort.order,
+                        'fas fa-sort-amount-down': !filters.sort.order,
                         'fas fa-sort-amount-up' : filters.sort.order
                       }"></i>
                   </th>

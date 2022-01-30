@@ -5,11 +5,7 @@
     </div>
     <div class="content">
       <div class="content-fluid">
-        <p>{{ categories }}</p>
-        <p>{{ connection_types }}</p>
-        <p>{{ meeting_types }}</p>
-
-
+        <p>Доброй пожаловать!</p>
       </div>
     </div>
   </div>
@@ -48,5 +44,5 @@ export default {
 </script>
 
 <style scoped>
-   
+
 </style>
