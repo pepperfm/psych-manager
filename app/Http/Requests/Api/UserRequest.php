@@ -8,7 +8,7 @@ class UserRequest extends BaseApiRequest
     {
         $this->sanitize();
         $this->phone = ['required', 'string', 'max:18'];
-        $this->email = ['sometimes', 'nullable', 'email:rfc,dns', 'max:255', 'unique:users'];
+        $this->email = ['sometimes', 'nullable', 'email:rfc,dns', 'max:255', 'unique:users,email'];
         if (\Auth::user()->phone != $this->input('phone')) {
             $this->phone = ['required', 'string', 'max:18', 'unique:users,phone'];
         }

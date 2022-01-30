@@ -8,7 +8,8 @@ use App\Http\Controllers\Api\{
     CategoryController,
     ClientController,
     SessionController,
-    UserController
+    UserController,
+    UserFilterController
 };
 
 use App\Http\Controllers\Api\StaticDataController;
@@ -38,7 +39,16 @@ Route::group([
         Route::get('categories', [StaticDataController::class, 'getCategories']);
     });
 
-    Route::get('session-clients', [StaticDataController::class, 'getClients']);
+    Route::group([
+        'prefix' => 'filters',
+        'middleware' => 'throttle:60,1'
+    ], static function() {
+        Route::get('/{module}', [UserFilterController::class, 'get']);
+        Route::post('/{module}', [UserFilterController::class, 'set']);
+        Route::get('/clear/{module?}', [UserFilterController::class, 'clear']);
+    });
+
+    Route::get('session-clients', [ClientController::class, 'getSessionClients']);
     Route::get('calendar-sessions', [SessionController::class, 'getCalendarSessions']);
     Route::post('users/sync-categories', [UserController::class, 'syncCategories']);
 

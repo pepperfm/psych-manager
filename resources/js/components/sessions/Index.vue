@@ -211,9 +211,12 @@
 <script>
 import FilterSession from './models/FilterSession.js'
 import {mapActions, mapGetters} from "vuex";
+import UserFilterMixin from "../_mixins/UserFilterMixin";
+import FilterClient from "../clients/models/FilterClient";
 
 export default {
   name: "Index",
+  mixins: [UserFilterMixin],
   data() {
     return {
       actions: {
@@ -275,10 +278,9 @@ export default {
     }),
   },
   async created() {
-    let filters = this.$localStorage.getItem(this.saveSessionAlias)
-    if (filters) {
-      this.filters = JSON.parse(filters)
-    }
+    let response = await this.getUserFilters(this.moduleName)
+    this.filters = Object.keys(response.filters).length > 0 ? response.filters : JSON.parse(JSON.stringify(FilterSession))
+
     if (this.calendarSessions.length <= 0) {
       await this.getCalendarSessions();
     }
@@ -298,7 +300,7 @@ export default {
     }),
     async getRecords() {
       try {
-        this.saveFilters()
+        await this.setUserFilters(this.moduleName, this.filters)
 
         let response = await this.$http.get(this.actions.rest, { params: { options: this.filters }})
         this.sessions = response.data.data.sessions
@@ -314,11 +316,6 @@ export default {
       this.showCalendarEvent = true
 
       e.stopPropagation()
-    },
-
-    saveFilters() {
-      this.$localStorage.removeItem(this.saveSessionAlias)
-      this.$localStorage.setItem(this.saveSessionAlias, JSON.stringify(this.filters))
     },
 
     async edit(model) {
@@ -368,10 +365,10 @@ export default {
       await this.getRecords()
     },
     async clearFilters() {
-      this.filters = JSON.parse(JSON.stringify(FilterSession))
-
+      this.filters = JSON.parse(JSON.stringify(FilterClient))
+      await this.clearUserFilters(this.moduleName)
       await this.getRecords()
-    }
+    },
   }
 }
 </script>

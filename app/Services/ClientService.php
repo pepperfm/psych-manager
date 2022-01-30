@@ -14,15 +14,16 @@ use App\Models\{Client, User, Category, ClientTherapy, ConnectionType};
 class ClientService
 {
     /**
-     * @param $filters
-     * @param $total
+     * @param array $filters
+     * @param ?int $total
+     * @param User $user
      *
      * @return Collection
      */
-    public function getUsersWithFilters($filters, &$total, $user): Collection
+    public function getUsersWithFilters(array $filters, int|null &$total, User $user): Collection
     {
         /** @var FilterBuilder $clientsQ */
-        $clientsQ = Client::query()->where('user_id', $user->id)->with(['sessions', 'connectionType', 'therapy', 'category'])
+        $clientsQ = $user->clients()->with(['sessions', 'connectionType', 'therapy', 'category'])
             ->clientFilters($filters['fields'] ?? []);
         $total = $clientsQ->count();
 

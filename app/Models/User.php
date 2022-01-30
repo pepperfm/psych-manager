@@ -129,4 +129,12 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Category::class);
     }
+
+    /**
+     * @return HasMany
+     */
+    public function filters(): HasMany
+    {
+        return $this->hasMany(UserFilter::class);
+    }
 }

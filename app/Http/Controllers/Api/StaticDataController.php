@@ -94,14 +94,6 @@ class StaticDataController extends Controller
     }
 
     /**
-     * @return JsonResponse
-     */
-    public function getClients(): JsonResponse
-    {
-        return $this->json->response(['clients' => auth()->user()->clients()->select(['id', 'name'])->get()]);
-    }
-
-    /**
      * Return all tooltips for admin tutorial-info
      *
      * @return JsonResponse

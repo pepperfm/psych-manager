@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers\Api;
 
-use Illuminate\Support\Facades\{ Auth, DB, Log };
+use Illuminate\Support\Facades\{Auth, DB, Log};
 
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 
 use App\Http\Requests\Api\ClientRequest;
 
-use App\Http\Resources\Api\Client\{ IndexResource, ShowResource };
+use App\Http\Resources\Api\Client\{IndexResource, ShowResource};
 
 use App\Contracts\ResponseContract;
 
@@ -54,7 +54,7 @@ class ClientController extends Controller
     public function index(Request $request): JsonResponse
     {
         $filters = $request->input('options', []);
-        $clients = $this->clientService->getUsersWithFilters($filters, $total, \Auth::user());
+        $clients = $this->clientService->getUsersWithFilters($filters, $total, Auth::user());
 
         return $this->json->response(['clients' => IndexResource::collection($clients), 'total' => $total]);
     }
@@ -148,7 +148,7 @@ class ClientController extends Controller
      */
     public function show($id): JsonResponse
     {
-        $client = Client::withTrashed()
+        $client = Client::query()->withTrashed()
             ->with(['sessions', 'connectionType', 'category', 'therapy'])
             ->find($id);
         if (!$client) {
@@ -201,13 +201,13 @@ class ClientController extends Controller
      */
     public function update($id, ClientRequest $request): JsonResponse
     {
-        $client = Client::findOrFail($id);
-        $connectionType = ConnectionType::find($request->getConnectionType());
-        $client->update($request->validated());
-        $category = Category::find($request->getCategoryId());
-
         try {
             DB::beginTransaction();
+
+            $client = Client::findOrFail($id);
+            $connectionType = ConnectionType::find($request->getConnectionType());
+            $client->update($request->validated());
+            $category = Category::find($request->getCategoryId());
 
             $therapy = ClientTherapy::updateOrCreate([
                 'client_id' => $client->id
@@ -291,5 +291,13 @@ class ClientController extends Controller
         }
 
         return $this->json->response([], 'Завершено');
+    }
+
+    /**
+     * @return JsonResponse
+     */
+    public function getSessionClients(): JsonResponse
+    {
+        return $this->json->response(['clients' => Auth::user()?->clients()->select(['id', 'name'])->get()]);
     }
 }

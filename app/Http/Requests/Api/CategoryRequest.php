@@ -18,7 +18,7 @@ class CategoryRequest extends BaseApiRequest
     {
         return [
             'categories' => [Rule::requiredIf(!empty($this->input('categories'))), 'nullable', 'array'],
-            'categories.*' => [Rule::requiredIf(!empty($this->input('categories'))), 'nullable', 'integer'],
+            'categories.*' => [Rule::requiredIf(!empty($this->input('categories'))), 'nullable', 'integer', 'exists:categories,id'],
             'name' => [Rule::requiredIf($this->routeIs('categories.store')), 'string', 'max:255']
         ];
     }

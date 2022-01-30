@@ -219,20 +219,22 @@
 
 <script>
 import {mapActions, mapGetters} from 'vuex'
-import FilterUser from './models/FilterClient.js'
+import FilterClient from './models/FilterClient.js'
 import UserDetails from "../_partials/UserDetails";
 import VisibleFieldDialog from "../_partials/VisibleFieldDialog";
+import UserFilterMixin from "../_mixins/UserFilterMixin";
 
 export default {
   name: "Index",
   components: {
-    FilterUser, UserDetails, VisibleFieldDialog
+    FilterClient, UserDetails, VisibleFieldDialog
   },
+  mixins: [UserFilterMixin],
   data: () => ({
     actions: {
       rest: '/api/v1/clients',
     },
-    filters: JSON.parse(JSON.stringify(FilterUser)),
+    filters: JSON.parse(JSON.stringify(FilterClient)),
     pickerOptions: {
       shortcuts: [{
         text: 'День',
@@ -277,7 +279,6 @@ export default {
     loading: true,
     saveUserAlias: 'saveUserAlias',
   }),
-
   computed: {
     ...mapGetters({
       categories: 'staticData/categories',
@@ -285,8 +286,10 @@ export default {
       connection_types: 'staticData/connection_types',
     }),
   },
-
   async created() {
+    let response = await this.getUserFilters(this.moduleName)
+    this.filters = Object.keys(response.filters).length > 0 ? response.filters : JSON.parse(JSON.stringify(FilterClient))
+
     await this.getRecords();
     if (this.categories.length <= 0) {
       await this.getCategories();
@@ -298,9 +301,7 @@ export default {
       await this.getConnectionTypes();
     }
   },
-
   methods: {
-
     ...mapActions({
       getCategories: 'staticData/getCategories',
       getConnectionTypes: 'staticData/getConnectionTypes',
@@ -308,7 +309,7 @@ export default {
     }),
   async getRecords() {
       try {
-        await this.saveFilters()
+        await this.setUserFilters(this.moduleName, this.filters)
 
         let response = await this.$http.get(this.actions.rest, { params: { options: this.filters }})
         this.clients = response.data.data.clients
@@ -323,13 +324,6 @@ export default {
       let response = await this.$http.get(`${this.actions.rest}/${client.id}`)
       this.client = response.data.data.client
       this.showClientDetails = true
-    },
-
-    async saveFilters() {
-      this.$localStorage.removeItem(this.saveUserAlias)
-      this.$localStorage.setItem(this.saveUserAlias, JSON.stringify(this.filters))
-
-      this.fieldsDialogIsVisible = false
     },
 
     async edit(model) {
@@ -377,11 +371,10 @@ export default {
       await this.getRecords()
     },
     async clearFilters() {
-      this.filters = JSON.parse(JSON.stringify(FilterUser))
-
+      this.filters = JSON.parse(JSON.stringify(FilterClient))
+      await this.clearUserFilters(this.moduleName)
       await this.getRecords()
     },
-
     saveDialogFields() {
       this.saveFilters()
       this.fieldsDialogIsVisible = false

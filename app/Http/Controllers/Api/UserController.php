@@ -6,7 +6,7 @@ use Illuminate\Http\JsonResponse;
 
 use App\Http\Resources\Api\User\UserResource;
 
-use App\Http\Requests\Api\{ CategoryRequest, UserRequest };
+use App\Http\Requests\Api\{CategoryRequest, UserRequest};
 
 use App\Contracts\ResponseContract;
 
