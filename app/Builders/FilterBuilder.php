@@ -27,7 +27,7 @@ class FilterBuilder extends Builder
      */
     public function sort(array $sort = []): Builder
     {
-        $order = ($sort['order'] ?? 0) === 1 ? 'asc' : 'desc';
+        $order = $sort['order'] ? 'asc' : 'desc';
         $this->orderBy($this->resolveSortField($sort['field'] ?? 'id'), $order);
 
         return $this;

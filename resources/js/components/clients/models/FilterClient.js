@@ -1,7 +1,7 @@
 export default {
     pagination: {
         page: 1,
-        limit: 10,
+        limit: 15,
     },
     sort: {
         field: 'created_at',

@@ -77,10 +77,10 @@ class ClientService
             ->clientFilters($filters['fields'] ?? []);
         $total = $clientsQ->count();
 
-        return $clientsQ->withPagination($filters['pagination'] ?? [])
-            ->sort($filters['sort'] ?? [])
-            ->withTrashed()
+        return $clientsQ->withTrashed()
             ->oldest('deleted_at')
+            ->withPagination($filters['pagination'] ?? [])
+            ->sort($filters['sort'] ?? [])
             ->get();
     }
 }

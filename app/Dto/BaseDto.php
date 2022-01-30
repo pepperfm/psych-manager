@@ -2,7 +2,9 @@
 
 namespace App\Dto;
 
+use JetBrains\PhpStorm\Pure;
 use JsonSerializable;
+use ReturnTypeWillChange;
 
 abstract class BaseDto implements JsonSerializable
 {
@@ -29,7 +31,7 @@ abstract class BaseDto implements JsonSerializable
     /**
      * @inheritDoc
      */
-    public function jsonSerialize()
+    #[ReturnTypeWillChange] #[Pure] public function jsonSerialize()
     {
         return $this->toArray();
     }
