@@ -74,11 +74,11 @@ class ClientService
         /** @var FilterBuilder $clientsQ */
         $clientsQ = $user->clients()
             ->with(['sessions', 'connectionType', 'therapy', 'category'])
-            ->latest()
             ->clientFilters($filters['fields'] ?? []);
         $total = $clientsQ->count();
 
         return $clientsQ->withPagination($filters['pagination'] ?? [])
+            ->sort($filters['sort'] ?? [])
             ->withTrashed()
             ->oldest('deleted_at')
             ->get();
