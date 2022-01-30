@@ -2,6 +2,8 @@
 
 namespace App\Services\Core;
 
+use App\Enums\RoleEnum;
+
 use App\Contracts\ClientContract;
 use App\Dto\ClientDto;
 
@@ -47,7 +49,7 @@ class Client implements ClientContract
         $this->phone = $dto->phone;
         $this->category_id = $dto->category_id;
         $this->birthday_date = $dto->birthday_date;
-        $this->role = $dto->role;
+        $this->role = $dto->role ?? RoleEnum::CLIENT->value;
         $this->gender = $dto->gender;
         $this->connection_type_id = $dto->connection_type_id;
         $this->connection_type_link = $dto->connection_type_link;

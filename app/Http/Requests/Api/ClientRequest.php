@@ -65,6 +65,7 @@ class ClientRequest extends BaseApiRequest implements FormRequestContract
     public function toDto(): ClientDto
     {
         $dto = new ClientDto();
+        $dto->id = $this->route('client');
         $dto->user_id = \Auth::id();
         $dto->name = $this->input('name');
         $dto->email = $this->input('email');
