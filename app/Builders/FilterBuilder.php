@@ -42,7 +42,7 @@ class FilterBuilder extends Builder
     {
         return match ($field) {
             'id' => 'id',
-            // 'session_date_users' => 'session_date',
+            // 'session_date_user' => 'session_date',
             default => $field,
         };
     }
