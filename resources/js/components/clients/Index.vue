@@ -289,7 +289,6 @@ export default {
   async created() {
     let response = await this.getUserFilters(this.moduleName)
     this.filters = Object.keys(response.filters).length > 0 ? response.filters : JSON.parse(JSON.stringify(FilterClient))
-
     await this.getRecords();
     if (this.categories.length <= 0) {
       await this.getCategories();
@@ -331,7 +330,7 @@ export default {
     },
 
     async create() {
-      await this.$router.push({name: 'create'})
+      await this.$router.push({name: `${this.moduleName}.create`})
     },
 
     async remove(client) {
@@ -375,9 +374,9 @@ export default {
       await this.clearUserFilters(this.moduleName)
       await this.getRecords()
     },
-    saveDialogFields() {
-      this.saveFilters()
-      this.fieldsDialogIsVisible = false
+    async saveDialogFields() {
+        await this.setUserFilters(this.moduleName, this.filters)
+        this.fieldsDialogIsVisible = false
     },
   },
 

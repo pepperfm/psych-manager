@@ -12,15 +12,17 @@ export default {
     curator_contacts: '',
     connection_type_string: '',
     meeting_type: '',
-    problem_severity: '',
     problem_id: '',
     category_id: '',
     problem_name: '',
     session_id: '',
     sessions: [],
     session_date_users: '',
-    plan: '',
-    notes: '',
-    concept_vision: '',
-    therapy: {}
+    therapy: {
+        concept_vision: '',
+        plan: '',
+        notes: '',
+        problem_severity: '',
+        request: '',
+    }
 }

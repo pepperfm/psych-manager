@@ -122,7 +122,7 @@
                     </el-link>
                   </td>
                   <td>
-                    <span v-if="!session.client.meeting_type">{{ session.client.connection_type_string }}</span>
+                    <span>{{ session.client.connection_type_string }}</span>
                   </td>
                   <td v-text="session.comment"></td>
                   <td class="actions">
@@ -323,7 +323,7 @@ export default {
     },
 
     async create() {
-      await this.$router.push({name: 'create'})
+      await this.$router.push({name: `${this.moduleName}.create`})
     },
 
     async remove(session) {
