@@ -9,6 +9,7 @@
         <p>{{ connection_types }}</p>
         <p>{{ meeting_types }}</p>
 
+
       </div>
     </div>
   </div>

@@ -2,10 +2,11 @@ import axios from '../../classes/AxiosWrapper';
 const url = '/api/v1';
 
 
-const state = {
+
+const state = () => ({
     clients: [],
     calendarSessions: [],
-};
+});
 
 const getters = {
     clients: state => state.clients,
@@ -29,7 +30,6 @@ const actions = {
 const mutations = {
     setClients: (state, clients) => state.clients = clients,
     setCalendarSessions: (state, calendarSessions) => state.calendarSessions = calendarSessions,
-
 };
 
 export default {

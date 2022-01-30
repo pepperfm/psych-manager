@@ -2,7 +2,6 @@ import Client from "../../clients/models/Client";
 
 export default {
     id: '',
-    user_id: '',
     user_name: '',
     status: '',
     comment: '',

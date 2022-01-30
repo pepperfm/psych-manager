@@ -285,7 +285,6 @@ export default {
     Sessions
   },
   async created() {
-    console.log()
     if (this.$route.params.id) {
       this.isRouterUpdate = true
       await this.getUser(this.$route.params.id);
@@ -337,6 +336,7 @@ export default {
         response = await this.$http.put(`${this.actions.rest}/${this.client.id}`, this.client)
         } else {
           response = await this.$http.post(this.actions.rest, this.client)
+
         }
         this.$message.success(response.data.message)
         await this.$router.push({name: 'clients'})

@@ -65,7 +65,6 @@
           </div>
         </div>
       </div>
-
     </div>
   </div>
 </template>
@@ -94,6 +93,7 @@ export default {
   },
 
   async created() {
+
     if (this.$route.params.id) {
       await this.getSession(this.$route.params.id);
     }
@@ -125,7 +125,7 @@ export default {
           response = await this.$http.post(this.actions.rest, this.session)
         }
         this.$message.success(response.data.message)
-        await this.$router.push({name: 'session-index'})
+        await this.$router.push({name: 'sessions'})
       } catch (e) {
         if (!e.response) {
           throw e

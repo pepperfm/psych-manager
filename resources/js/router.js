@@ -54,14 +54,20 @@ const routes = [
     meta: { auth: true, menuitem: '4-3' }
   },
   {
+    path: '/sessions/create',
+    name: 'sessions.create',
+    components: { aside: DefaultAside, header: DefaultHeader, default: SessionsForm },
+    meta: { auth: true, menuitem: '4-3' }
+  },
+  {
     path: '/clients/:id',
     name: 'clients.update',
     components: { aside: DefaultAside, header: DefaultHeader, default: ClientForm },
     meta: { auth: true, menuitem: '4-4' }
   },
   {
-    path: '/create',
-    name: 'create',
+    path: '/clients/create',
+    name: 'clients.create',
     components: { aside: DefaultAside, header: DefaultHeader, default: ClientForm },
     meta: { auth: true, menuitem: '4-2' }
   },
