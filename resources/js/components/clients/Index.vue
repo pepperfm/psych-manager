@@ -218,7 +218,7 @@
 </template>
 
 <script>
-
+import {mapActions, mapGetters} from 'vuex'
 import FilterUser from './models/FilterClient.js'
 import UserDetails from "../_partials/UserDetails";
 import VisibleFieldDialog from "../_partials/VisibleFieldDialog";
@@ -231,10 +231,6 @@ export default {
   data: () => ({
     actions: {
       rest: '/api/v1/clients',
-
-      getCategories: '/api/v1/static-data/categories',
-      getConnectionTypes: '/api/v1/static-data/connection-types',
-      getMeetingTypes: '/api/v1/static-data/meeting-types',
     },
     filters: JSON.parse(JSON.stringify(FilterUser)),
     pickerOptions: {
@@ -275,22 +271,41 @@ export default {
     moduleName: 'clients',
     clients: [],
     client: {},
-    connection_types: [],
-    meeting_types: [],
-    categories: [],
     total: 0,
     showClientDetails: false,
     fieldsDialogIsVisible: false,
     loading: true,
     saveUserAlias: 'saveUserAlias',
   }),
+
+  computed: {
+    ...mapGetters({
+      categories: 'staticData/categories',
+      meeting_types: 'staticData/meeting_types',
+      connection_types: 'staticData/connection_types',
+    }),
+  },
+
   async created() {
     await this.getRecords();
-    await this.getCategories();
-    await this.getMeetingTypes();
-    await this.getConnectionTypes();
+    if (this.categories.length <= 0) {
+      await this.getCategories();
+    }
+    if (this.meeting_types.length <= 0) {
+      await this.getMeetingTypes();
+    }
+    if (this.connection_types.length <= 0) {
+      await this.getConnectionTypes();
+    }
   },
+
   methods: {
+
+    ...mapActions({
+      getCategories: 'staticData/getCategories',
+      getConnectionTypes: 'staticData/getConnectionTypes',
+      getMeetingTypes: 'staticData/getMeetingTypes',
+    }),
   async getRecords() {
       try {
         await this.saveFilters()
@@ -315,20 +330,6 @@ export default {
       this.$localStorage.setItem(this.saveUserAlias, JSON.stringify(this.filters))
 
       this.fieldsDialogIsVisible = false
-    },
-
-    async getConnectionTypes() {
-      let response = await this.$http.get(this.actions.getConnectionTypes)
-      this.connection_types = response.data.data.connection_types
-    },
-    async getMeetingTypes() {
-      let response = await this.$http.get(this.actions.getMeetingTypes)
-      this.meeting_types = response.data.data.meeting_types
-    },
-    async getCategories() {
-      let response = await this.$http.get(`${this.actions.getCategories}`)
-      this.categories = response.data.data.categories
-      console.log(response.data.data);
     },
 
     async edit(model) {
@@ -359,7 +360,6 @@ export default {
       }
     },
 
-
     async sorting(field) {
       this.filters.sort.field = field
       this.filters.sort.order = !this.filters.sort.order
@@ -386,7 +386,8 @@ export default {
       this.saveFilters()
       this.fieldsDialogIsVisible = false
     },
-  }
+  },
+
 
 };
 </script>

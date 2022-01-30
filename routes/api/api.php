@@ -36,9 +36,9 @@ Route::group([
         Route::get('meeting-types', [StaticDataController::class, 'getMeetingTypes']);
         Route::get('gender-list', [StaticDataController::class, 'getGenderList']);
         Route::get('categories', [StaticDataController::class, 'getCategories']);
-        Route::get('clients-all', [StaticDataController::class, 'getClients']);
     });
 
+    Route::get('session-clients', [StaticDataController::class, 'getClients']);
     Route::get('calendar-sessions', [SessionController::class, 'getCalendarSessions']);
     Route::post('users/sync-categories', [UserController::class, 'syncCategories']);
 

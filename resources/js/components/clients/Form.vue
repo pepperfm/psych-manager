@@ -357,8 +357,7 @@ export default {
     },
 
     backToIndex() {
-      // this.$router.push({name: 'clients'})
-      this.$router.go(-1)
+      this.$router.push({name: 'clients'})
     },
   }
 }

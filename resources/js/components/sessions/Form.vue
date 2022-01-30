@@ -17,19 +17,19 @@
       </div>
     </div>
     <div class="row" v-loading="loading">
-      <div class="col-xl-4 col-lg-6 col-md-8 col-sm-10 col-xs-12 ">
+      <div class="col-xl-24">
         <div class="card">
           <div class="card-body">
             <h4>Основная информация</h4>
 
             <div class="form-group">
               <label>Клиент</label>
-              <el-select v-model="session.user_id" placeholder="Введите/выберите имя" size="medium" filterable remote clearable>
+              <el-select v-model="session.client_id" placeholder="Введите/выберите имя" size="medium" filterable remote clearable>
                 <el-option
-                  v-for="user in users"
-                  :key="user.id"
-                  :label="user.name"
-                  :value="user.id"
+                  v-for="client in clients"
+                  :key="client.id"
+                  :label="client.name"
+                  :value="client.id"
                 >
                 </el-option>
               </el-select>
@@ -72,6 +72,7 @@
 
 <script>
 import Session from "./models/Session";
+import {mapGetters, mapActions} from "vuex";
 
 export default {
 
@@ -80,23 +81,31 @@ export default {
     return {
       actions: {
         rest: '/api/v1/sessions',
-
-        getUsers: '/api/v1/static-data/users-all'
       },
       session: JSON.parse(JSON.stringify(Session)),
-      users: [],
       loading: true,
       errors: [],
     }
   },
+  computed: {
+    ...mapGetters({
+      clients: 'sessions/clients',
+    }),
+  },
+
   async created() {
     if (this.$route.params.id) {
       await this.getSession(this.$route.params.id);
     }
-    await this.getUsers()
+    await this.getClients()
     this.loading = false;
   },
   methods: {
+
+    ...mapActions({
+      getClients: 'sessions/getClients',
+    }),
+
     async getSession(id) {
       try {
         let response = await this.$http.get(`${this.actions.rest}/${id}`)
@@ -104,11 +113,6 @@ export default {
       } catch (e) {
         this.$message.error('Error')
       }
-    },
-
-    async getUsers() {
-      let response = await this.$http.get(`${this.actions.getUsers}`)
-      this.users = response.data.data.users
     },
 
     async save() {
@@ -140,8 +144,7 @@ export default {
     },
 
     backToIndex() {
-      // this.$router.push({name: 'sessions'})
-      this.$router.go(-1)
+      this.$router.push({name: 'sessions'})
     },
   }
 }

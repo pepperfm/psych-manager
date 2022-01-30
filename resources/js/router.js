@@ -13,6 +13,7 @@ import Main from "./components/Main";
 import Clients from "./components/clients/Index"
 import ClientForm from "./components/clients/Form"
 import Sessions from  "./components/sessions/Index"
+import SessionsForm from  "./components/sessions/Form"
 import Profile from  "./components/profile/Form"
 
 const routes = [
@@ -49,7 +50,7 @@ const routes = [
   {
     path: '/sessions/:id',
     name: 'sessions.update',
-    components: { aside: DefaultAside, header: DefaultHeader, default: ClientForm },
+    components: { aside: DefaultAside, header: DefaultHeader, default: SessionsForm },
     meta: { auth: true, menuitem: '4-3' }
   },
   {

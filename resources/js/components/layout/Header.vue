@@ -21,7 +21,7 @@ export default {
       pathName: "Psych Manager",
       toggled: false,
       toggled2: true,
-      user: $identity,
+      user: $identity.user,
     };
   },
   async created() {

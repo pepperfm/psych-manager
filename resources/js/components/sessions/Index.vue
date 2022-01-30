@@ -210,6 +210,7 @@
 
 <script>
 import FilterSession from './models/FilterSession.js'
+import {mapActions, mapGetters} from "vuex";
 
 export default {
   name: "Index",
@@ -259,9 +260,6 @@ export default {
       },
       moduleName: 'sessions',
       sessions: [],
-      calendarSessions: [],
-      meeting_types: [],
-      connection_types: [],
       total: 0,
       calendarItem: {},
       showCalendarEvent: false,
@@ -269,17 +267,35 @@ export default {
       saveSessionAlias: 'saveSessionAlias',
     }
   },
+  computed: {
+    ...mapGetters({
+      calendarSessions: 'sessions/calendarSessions',
+      meeting_types: 'staticData/meeting_types',
+      connection_types: 'staticData/connection_types',
+    }),
+  },
   async created() {
     let filters = this.$localStorage.getItem(this.saveSessionAlias)
     if (filters) {
       this.filters = JSON.parse(filters)
     }
-    await this.getConnectionTypes()
-    await this.getMeetingTypes()
-    await this.getCalendarSessions()
+    if (this.calendarSessions.length <= 0) {
+      await this.getCalendarSessions();
+    }
+    if (this.meeting_types.length <= 0) {
+      await this.getMeetingTypes();
+    }
+    if (this.connection_types.length <= 0) {
+      await this.getConnectionTypes();
+    }
     await this.getRecords()
   },
   methods: {
+    ...mapActions({
+      getCalendarSessions: 'sessions/getCalendarSessions',
+      getConnectionTypes: 'staticData/getConnectionTypes',
+      getMeetingTypes: 'staticData/getMeetingTypes',
+    }),
     async getRecords() {
       try {
         this.saveFilters()
@@ -293,18 +309,6 @@ export default {
       }
     },
 
-    async getConnectionTypes() {
-      let response = await this.$http.get(this.actions.getConnectionTypes)
-      this.connection_types = response.data.data.connection_types
-    },
-    async getMeetingTypes() {
-      let response = await this.$http.get(this.actions.getMeetingTypes)
-      this.meeting_types = response.data.data.meeting_types
-    },
-    async getCalendarSessions() {
-      let response = await this.$http.get(this.actions.getCalendarSessions)
-      this.calendarSessions = response.data.data.sessions
-    },
     onEventClick(event, e) {
       this.calendarItem = event
       this.showCalendarEvent = true

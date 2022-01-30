@@ -33,7 +33,7 @@ class ShowResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'client_id' => $this->client,
+            'client_id' => $this->client->id,
             'client_name' => $this->client->name,
             'user_id' => $this->user_id,
             'comment' => $this->comment,

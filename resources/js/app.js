@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import router from './router'
+import store from './store'
 
 import Identity from "./classes/Identity";
 import axios from "./classes/AxiosWrapper"
@@ -51,9 +52,8 @@ async function init() {
 
   new Vue({
     el: '#app',
-    // async created() {
-    // },
     router,
+    store,
     methods: {}
   })//.$mount('#app');
 }

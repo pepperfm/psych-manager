@@ -19,10 +19,10 @@ class ClientService
      *
      * @return Collection
      */
-    public function getUsersWithFilters($filters, &$total): Collection
+    public function getUsersWithFilters($filters, &$total, $user): Collection
     {
         /** @var FilterBuilder $clientsQ */
-        $clientsQ = Client::query()->with(['sessions', 'connectionType', 'therapy', 'category'])
+        $clientsQ = Client::query()->where('user_id', $user->id)->with(['sessions', 'connectionType', 'therapy', 'category'])
             ->clientFilters($filters['fields'] ?? []);
         $total = $clientsQ->count();
 
