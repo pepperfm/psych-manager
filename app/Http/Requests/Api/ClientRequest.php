@@ -2,11 +2,10 @@
 
 namespace App\Http\Requests\Api;
 
-use Illuminate\Validation\Rule;
+use App\Contracts\FormRequestContract;
 
+use App\Dto\ClientDto;
 use App\Enums\ConnectionTypeEnum;
-
-use App\Models\User;
 
 /**
  * Class ClientRequest
@@ -21,24 +20,22 @@ use App\Models\User;
  *     @OA\Property(property="connection_type", type="integer", example=1, description="Id предпочитаемого способа связи"),
  * )
  */
-class ClientRequest extends BaseApiRequest
+class ClientRequest extends BaseApiRequest implements FormRequestContract
 {
     public function rules(): array
     {
         $this->sanitize();
 
         if ($this->isMethod('POST')) {
-            $this->email = ['sometimes', 'nullable', 'email:rfc,dns', 'max:255', 'unique:users'];
-            $this->phone = [
-                'sometimes', 'nullable', 'string', 'max:18',
-                Rule::unique((new User())->getTable(), 'phone')
-            ];
+            $this->email = ['sometimes', 'nullable', 'email:rfc,dns', 'max:255', 'unique:users,email'];
+            $this->phone = ['sometimes', 'nullable', 'string', 'max:18', 'unique:users,phone'];
         }
 
         return [
             'name' => ['sometimes', 'nullable', 'string', 'max:255'],
             'email' => $this->email,
             'phone' => $this->phone,
+            'category_id' => ['sometimes', 'integer', 'exists:categories,id'],
             'birthday_date' => ['sometimes', !$this->isEmptyString('birthday_date') ? 'date_format:"Y-m-d"' : ''],
             'password' => ['sometimes', 'nullable', 'string', 'min:6'],
             'role' => ['sometimes', 'nullable', 'integer'],
@@ -57,11 +54,16 @@ class ClientRequest extends BaseApiRequest
 
     public function getConnectionType(): int
     {
-        return (int) $this->input('connection_type', ConnectionTypeEnum::PHONE->value);
+        return $this->input('connection_type_id', ConnectionTypeEnum::PHONE->value);
     }
 
     public function getCategoryId(): int
     {
         return $this->input('category_id');
+    }
+
+    public function toDto(): ClientDto
+    {
+        return new ClientDto($this->validated());
     }
 }

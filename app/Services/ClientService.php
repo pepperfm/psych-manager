@@ -2,6 +2,8 @@
 
 namespace App\Services;
 
+use App\Contracts\ClientContract;
+use App\Factories\ClientFactory;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Collection;
 
@@ -9,10 +11,20 @@ use App\Builders\FilterBuilder;
 
 use App\Http\Requests\Api\ClientRequest;
 
+use App\Contracts\FactoryContract;
+
 use App\Models\{Client, User, Category, ClientTherapy, ConnectionType};
 
 class ClientService
 {
+    protected FactoryContract $factory;
+    protected ClientContract $client;
+
+    public function __construct()
+    {
+        $this->factory = new ClientFactory();
+    }
+
     /**
      * @param array $filters
      * @param ?int $total
@@ -49,15 +61,16 @@ class ClientService
         $client->category()->associate($category);
         $connectionType->clients()->save($client);
 
+        if (!$client->save()) {
+            throw new \RuntimeException('Ошибка сохранения клиента', JsonResponse::HTTP_INTERNAL_SERVER_ERROR);
+        }
+
         $therapy = ClientTherapy::n()
             ->setProblemSeverity($request->input('therapy.problem_severity'))
             ->setPlan($request->input('therapy.plan'))
             ->setRequest($request->input('therapy.request'))
             ->setNotes($request->input('notes'))
             ->setConceptVision($request->input('concept_vision'));
-        if (!$client->save()) {
-            throw new \RuntimeException('Ошибка сохранения клиента', JsonResponse::HTTP_INTERNAL_SERVER_ERROR);
-        }
 
         $therapy->client()->associate($client);
 
