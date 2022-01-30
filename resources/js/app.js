@@ -25,7 +25,7 @@ locale.use(lang)
 Vue.component('vue-cal', VueCal)
 
 Vue.use(VueRouter);
-Vue.use(ElementUI);
+Vue.use(ElementUI, { size: 'small'});
 // Vue.use(VCalendar);
 Vue.use(VueCal);
 
