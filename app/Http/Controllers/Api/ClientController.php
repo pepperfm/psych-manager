@@ -194,37 +194,18 @@ class ClientController extends Controller
      *
      * Update the specified resource in storage.
      *
-     * @param $id
      * @param ClientRequest $request
      *
      * @throws \Throwable
      * @return JsonResponse
      */
-    public function update($id, ClientRequest $request): JsonResponse
+    public function update(ClientRequest $request): JsonResponse
     {
         try {
             DB::beginTransaction();
 
-            $client = Client::findOrFail($id);
-            $connectionType = ConnectionType::find($request->getConnectionType());
-            $client->update($request->validated());
-            $category = Category::find($request->getCategoryId());
-
-            $therapy = ClientTherapy::updateOrCreate([
-                'client_id' => $client->id
-            ], [
-                'plan' => $request->input('therapy.plan'),
-                'notes' => $request->input('notes'),
-                'request' => $request->input('therapy.request'),
-                'problem_severity' => $request->input('therapy.problem_severity'),
-                'concept_vision' => $request->input('concept_vision'),
-            ]);
-            $client->category()->associate($category);
-            $therapy->client()->associate($client);
-            $therapy->save();
-
-            $connectionType->clients()->save($client);
-            $client->save();
+            $client = $this->clientService->getFactory()->fromRequest($request)->make();
+            $this->clientService->saveClient($client);
 
             DB::commit();
         } catch (\Throwable $e) {

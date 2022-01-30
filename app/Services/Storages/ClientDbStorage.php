@@ -40,6 +40,10 @@ class ClientDbStorage implements StorageContract
     {
         if ($client->id) {
             $newModel = ClientModel::query()->find($client->id);
+            if ($client->email === $newModel->email) {
+                unset($client->email);
+            }
+            $newModel->update((array) $client);
         } else {
             $newModel = new ClientModel((array) $client);
         }

@@ -21,7 +21,7 @@ class SessionService
     public function getSessionsWithFilters($filters, &$total): Collection
     {
         /** @var FilterBuilder $sessionsQ */
-        $sessionsQ = Session::q()->with(['client'])->sessionFilters($filters['fields'] ?? []);
+        $sessionsQ = Session::q()->with(['client'])->latest()->sessionFilters($filters['fields'] ?? []);
         $total = $sessionsQ->count();
 
         return $sessionsQ->withPagination($filters['pagination'] ?? [])

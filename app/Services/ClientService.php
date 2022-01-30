@@ -72,7 +72,9 @@ class ClientService
     public function getUsersWithFilters(array $filters, int|null &$total, User $user): Collection
     {
         /** @var FilterBuilder $clientsQ */
-        $clientsQ = $user->clients()->with(['sessions', 'connectionType', 'therapy', 'category'])
+        $clientsQ = $user->clients()
+            ->with(['sessions', 'connectionType', 'therapy', 'category'])
+            ->latest()
             ->clientFilters($filters['fields'] ?? []);
         $total = $clientsQ->count();
 
