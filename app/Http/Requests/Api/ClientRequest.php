@@ -5,6 +5,7 @@ namespace App\Http\Requests\Api;
 use App\Contracts\FormRequestContract;
 
 use App\Dto\ClientDto;
+use App\Dto\TherapyDto;
 use App\Enums\ConnectionTypeEnum;
 
 /**
@@ -37,7 +38,6 @@ class ClientRequest extends BaseApiRequest implements FormRequestContract
             'phone' => $this->phone,
             'category_id' => ['sometimes', 'integer', 'exists:categories,id'],
             'birthday_date' => ['sometimes', !$this->isEmptyString('birthday_date') ? 'date_format:"Y-m-d"' : ''],
-            'password' => ['sometimes', 'nullable', 'string', 'min:6'],
             'role' => ['sometimes', 'nullable', 'integer'],
             'gender' => ['sometimes', 'nullable', 'boolean'],
             'connection_type_id' => ['required', 'integer'],
@@ -47,8 +47,8 @@ class ClientRequest extends BaseApiRequest implements FormRequestContract
             'therapy.problem_severity' => ['sometimes', 'nullable', 'integer'],
             'therapy.plan' => ['sometimes', 'nullable', 'string'],
             'therapy.request' => ['sometimes', 'nullable', 'string'],
-            'notes' => ['sometimes', 'nullable', 'string'],
-            'concept_vision' => ['sometimes', 'nullable', 'string'],
+            'therapy.notes' => ['sometimes', 'nullable', 'string'],
+            'therapy.concept_vision' => ['sometimes', 'nullable', 'string'],
         ];
     }
 
@@ -64,6 +64,22 @@ class ClientRequest extends BaseApiRequest implements FormRequestContract
 
     public function toDto(): ClientDto
     {
-        return new ClientDto($this->validated());
+        $dto = new ClientDto();
+        $dto->user_id = \Auth::id();
+        $dto->name = $this->input('name');
+        $dto->email = $this->input('email');
+        $dto->phone = $this->input('phone');
+        $dto->category_id = $this->input('category_id');
+        $dto->birthday_date = $this->input('birthday_date');
+        $dto->role = $this->input('role');
+        $dto->gender = $this->input('gender');
+        $dto->connection_type_id = $this->input('connection_type_id');
+        $dto->connection_type_link = $this->input('connection_type_link');
+        $dto->curator_contacts = $this->input('curator_contacts');
+        $dto->meeting_type = $this->input('meeting_type');
+
+        $dto->therapy = new TherapyDto($this->input('therapy'));
+
+        return $dto;
     }
 }

@@ -2,9 +2,8 @@
 
 namespace App\Factories;
 
-use App\Services\Client;
 use App\Contracts\{ClientContract, FactoryContract, FormRequestContract};
-
+use App\Services\Core\Client;
 use App\Dto\ClientDto;
 
 class ClientFactory implements FactoryContract

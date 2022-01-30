@@ -98,7 +98,8 @@ class ClientController extends Controller
         try {
             DB::beginTransaction();
 
-            $this->clientService->save($request, Auth::user());
+            $client = $this->clientService->getFactory()->fromRequest($request)->make();
+            $this->clientService->saveClient($client);
 
             DB::commit();
         } catch (\Throwable $e) {

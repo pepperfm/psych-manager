@@ -2,27 +2,64 @@
 
 namespace App\Services;
 
-use App\Contracts\ClientContract;
-use App\Factories\ClientFactory;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Collection;
 
 use App\Builders\FilterBuilder;
 
-use App\Http\Requests\Api\ClientRequest;
+use App\Services\Storages\ClientDbStorage;
+use App\Factories\ClientFactory;
 
-use App\Contracts\FactoryContract;
+use App\Contracts\{FactoryContract, StorageContract, ClientContract};
 
-use App\Models\{Client, User, Category, ClientTherapy, ConnectionType};
+use App\Models\{Client, User};
 
 class ClientService
 {
     protected FactoryContract $factory;
     protected ClientContract $client;
+    protected StorageContract $storage;
 
     public function __construct()
     {
         $this->factory = new ClientFactory();
+        $this->storage = new ClientDbStorage();
+        $this->storage->setFactory($this->factory);
+    }
+
+    /**
+     * @return FactoryContract
+     */
+    public function getFactory(): FactoryContract
+    {
+        return $this->factory;
+    }
+
+    public function setClient(ClientContract $client): static
+    {
+        $this->client = $client;
+
+        return $this;
+    }
+
+    /**
+     * @param ClientContract $client
+     *
+     * @return $this
+     */
+    public function saveClient(ClientContract $client): static
+    {
+        $this->setClient($client);
+        $this->save();
+
+        return $this;
+    }
+
+    /**
+     * @return Client
+     */
+    public function save(): Client
+    {
+        return $this->storage->save($this->client);
     }
 
     /**
@@ -43,39 +80,5 @@ class ClientService
             ->withTrashed()
             ->oldest('deleted_at')
             ->get();
-    }
-
-    /**
-     * @param ClientRequest $request
-     * @param User $user
-     *
-     * @return void
-     */
-    public function save(ClientRequest $request, User $user): void
-    {
-        $client = new Client($request->validated());
-        $connectionType = ConnectionType::find($request->getConnectionType());
-        $category = Category::find($request->getCategoryId());
-
-        $client->user()->associate($user);
-        $client->category()->associate($category);
-        $connectionType->clients()->save($client);
-
-        if (!$client->save()) {
-            throw new \RuntimeException('Ошибка сохранения клиента', JsonResponse::HTTP_INTERNAL_SERVER_ERROR);
-        }
-
-        $therapy = ClientTherapy::n()
-            ->setProblemSeverity($request->input('therapy.problem_severity'))
-            ->setPlan($request->input('therapy.plan'))
-            ->setRequest($request->input('therapy.request'))
-            ->setNotes($request->input('notes'))
-            ->setConceptVision($request->input('concept_vision'));
-
-        $therapy->client()->associate($client);
-
-        if (!$therapy->save()) {
-            throw new \RuntimeException('Ошибка создания данных терапии', JsonResponse::HTTP_INTERNAL_SERVER_ERROR);
-        }
     }
 }
