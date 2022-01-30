@@ -111,7 +111,7 @@ class User extends Authenticatable
      */
     public function clients(): HasMany
     {
-        return $this->hasMany(Client::class, 'user_id', 'id');
+        return $this->hasMany(Client::class, 'client_id', 'id');
     }
 
     /**
@@ -119,7 +119,7 @@ class User extends Authenticatable
      */
     public function sessions(): HasMany
     {
-        return $this->hasMany(Session::class, 'client_id', 'id');
+        return $this->hasMany(Session::class, 'user_id', 'id');
     }
 
     /**

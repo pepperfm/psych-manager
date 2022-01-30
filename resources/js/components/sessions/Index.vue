@@ -221,9 +221,6 @@ export default {
     return {
       actions: {
         rest: '/api/v1/sessions',
-        getCalendarSessions: '/api/v1/calendar-sessions',
-        getConnectionTypes: '/api/v1/static-data/connection-types',
-        getMeetingTypes: '/api/v1/static-data/meeting-types',
       },
       filters: JSON.parse(JSON.stringify(FilterSession)),
       pickerOptions: {
