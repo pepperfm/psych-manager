@@ -18,7 +18,7 @@ class ConnectionTypesSeeder extends Seeder
     public function run(): void
     {
         foreach (ConnectionTypeEnum::cases() as $type) {
-            ConnectionType::q()->updateOrCreate(['name' => $type]);
+            ConnectionType::q()->updateOrCreate(['name' => $type->label()]);
         }
     }
 }

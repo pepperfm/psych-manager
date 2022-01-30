@@ -7,12 +7,12 @@ use Illuminate\Http\Request;
 
 use App\Http\Resources\Api\Sessions\IndexResource;
 
-use App\Models\User;
+use App\Models\Client;
 
 /**
  * Class ShowResource
  * @package App\Http\Resources\Api\Client
- * @mixin User
+ * @mixin Client
  *
  * @OA\Schema(
  *     schema="ClientShowResource",
@@ -44,9 +44,9 @@ class ShowResource extends JsonResource
             'name' => $this->name,
             'phone' => $this->phone,
             'birthday_date' => $this->birthday_date,
-            'session_id' => $this->latestSession->first()->id ?? '',
+            'session_id' => $this->latestSession->id ?? '',
             'category_id' => $this->category_id,
-            'category' => $this->category ? $this->category->name : '',
+            'category' => $this->category->name ?? '',
             'connection_type_id' => $this->connection_type_id,
             'curator_contacts' => $this->curator_contacts,
             'meeting_type_icon' => $this->meeting_type ? 'el-icon-office-building' : 'el-icon-service',

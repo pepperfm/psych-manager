@@ -13,7 +13,7 @@ class CreateConnectionTypesTable extends Migration
      */
     public function up(): void
     {
-        Schema::create('connection_types', function (Blueprint $table) {
+        Schema::create('connection_types', static function (Blueprint $table) {
             $table->id()->index();
             $table->string('name')->comment('Предпочитаемый способ связи с клиентом');
             $table->timestamps();

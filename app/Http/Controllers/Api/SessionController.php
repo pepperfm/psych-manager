@@ -2,20 +2,19 @@
 
 namespace App\Http\Controllers\Api;
 
-use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
+use Illuminate\Http\{JsonResponse, Request};
 
 use Exception;
 
 use App\Http\Requests\Api\SessionRequest;
 
-use App\Http\Resources\Api\Sessions\{ IndexResource, ShowResource, CalendarResource };
+use App\Http\Resources\Api\Sessions\{IndexResource, ShowResource, CalendarResource};
 
 use App\Contracts\ResponseContract;
 
 use App\Services\SessionService;
 
-use App\Models\{ Session, Client };
+use App\Models\{Session, Client};
 
 class SessionController extends Controller
 {
@@ -198,8 +197,7 @@ class SessionController extends Controller
             ->setSessionDate($request->input('session_date'))
             ->save();
 
-        // TODO: check this -> -> -> (Auth::user() vs $session->user)
-        if (!$session->user->sessions()->save($session)) {
+        if (!\Auth::user()?->sessions()->save($session)) {
             return $this->json->response([], 'Запись не найдена', JsonResponse::HTTP_NOT_FOUND);
         }
 
