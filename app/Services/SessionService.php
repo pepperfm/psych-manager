@@ -23,6 +23,7 @@ class SessionService
      */
     public function getSessionsWithFilters(array $filters, int|null &$total, User $user): Collection
     {
+        dd($user->sessions()->first());
         /** @var FilterBuilder $sessionsQ */
         $sessionsQ = $user->sessions()->with(['client'])->sessionFilters($filters['fields'] ?? []);
         $total = $sessionsQ->count();
