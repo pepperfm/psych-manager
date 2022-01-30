@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\User;
 use Illuminate\Support\Collection;
 
 use Carbon\Carbon;
@@ -12,16 +13,18 @@ use App\Models\Session;
 
 class SessionService
 {
+
     /**
-     * @param $filters
-     * @param $total
+     * @param array $filters
+     * @param int|null $total
+     * @param User $user
      *
      * @return Collection
      */
-    public function getSessionsWithFilters($filters, &$total): Collection
+    public function getSessionsWithFilters(array $filters, int|null &$total, User $user): Collection
     {
         /** @var FilterBuilder $sessionsQ */
-        $sessionsQ = Session::q()->with(['client'])->sessionFilters($filters['fields'] ?? []);
+        $sessionsQ = $user->sessions()->with(['client'])->sessionFilters($filters['fields'] ?? []);
         $total = $sessionsQ->count();
 
         return $sessionsQ->withPagination($filters['pagination'] ?? [])

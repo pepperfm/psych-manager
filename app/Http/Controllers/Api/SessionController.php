@@ -50,7 +50,7 @@ class SessionController extends Controller
      */
     public function index(Request $request, SessionService $sessionService): JsonResponse
     {
-        $sessions = $sessionService->getSessionsWithFilters($request->input('options', []), $total);
+        $sessions = $sessionService->getSessionsWithFilters($request->input('options', []), $total, \Auth::user());
 
         return $this->json->response(['sessions' => IndexResource::collection($sessions), 'total' => $total]);
     }
