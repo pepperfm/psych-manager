@@ -5,7 +5,7 @@
     </div>
     <div class="content">
       <div class="content-fluid">
-        <p>Доброй пожаловать!</p>
+        <p>Добро пожаловать!</p>
       </div>
     </div>
   </div>
