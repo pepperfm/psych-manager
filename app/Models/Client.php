@@ -11,6 +11,8 @@ use Illuminate\Database\Query\Builder as QueryBuilder;
 
 use App\Builders\FilterBuilder;
 
+use App\Models\Scopes\SessionUserScope;
+
 class Client extends User
 {
     use HasFactory;
@@ -39,11 +41,19 @@ class Client extends User
     }
 
     /**
+     * @inheritdoc
+     */
+    protected static function booted(): void
+    {
+        static::addGlobalScope(new SessionUserScope(\Auth::id() ?? 1));
+    }
+
+    /**
      * @return BelongsTo
      */
     public function user(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'client_id', 'id');
+        return $this->belongsTo(User::class, 'user_id', 'id');
     }
 
     /**

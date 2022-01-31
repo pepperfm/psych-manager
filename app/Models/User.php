@@ -71,14 +71,6 @@ class User extends Authenticatable
     ];
 
     /**
-     * @inheritdoc
-     */
-    protected static function booted(): void
-    {
-        // static::addGlobalScope(new SessionUserScope(Auth::id() ?? 1));
-    }
-
-    /**
      * Always encrypt password when it is updated.
      *
      * @return Attribute
@@ -111,7 +103,7 @@ class User extends Authenticatable
      */
     public function clients(): HasMany
     {
-        return $this->hasMany(Client::class, 'client_id', 'id');
+        return $this->hasMany(Client::class, 'user_id', 'id');
     }
 
     /**
