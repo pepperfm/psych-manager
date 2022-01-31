@@ -22,18 +22,18 @@ class ClientsSeeder extends Seeder
             ->has(
                 Session::factory()
                     ->count(5)
-                    ->state(function (array $attributes, Client $user) {
+                    ->state(function (array $attributes, Client $client) {
                         return [
-                            'user_id' => $user->user_id
+                            'user_id' => $client->user_id
                         ];
                     })
             )
             ->has(
                 ClientTherapy::factory()
                     ->count(1)
-                    ->state(function (array $attributes, Client $user) {
+                    ->state(function (array $attributes, Client $client) {
                         return [
-                            'client_id' => $user->id
+                            'client_id' => $client->id
                         ];
                     }), 'therapy'
             )

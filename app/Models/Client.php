@@ -43,7 +43,15 @@ class Client extends User
      */
     public function user(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'user_id', 'id');
+        return $this->belongsTo(User::class, 'client_id', 'id');
+    }
+
+    /**
+     * @return HasMany
+     */
+    public function sessions(): HasMany
+    {
+        return $this->hasMany(Session::class, 'client_id', 'id');
     }
 
     /**
