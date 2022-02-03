@@ -326,7 +326,7 @@ export default {
     async remove(session) {
       this.errors = []
       try {
-        await this.$http.delete('/api/v1/sessions/' + session.id)
+        await this.$http.delete(`${this.actions.rest}/${session.id}`)
         this.showCalendarEvent = false
         await this.getRecords()
         await this.getCalendarSessions()

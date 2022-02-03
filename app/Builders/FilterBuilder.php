@@ -4,6 +4,8 @@ namespace App\Builders;
 
 use Illuminate\Database\Eloquent\Builder;
 
+use App\Models\Session;
+
 class FilterBuilder extends Builder
 {
     /**
@@ -27,8 +29,33 @@ class FilterBuilder extends Builder
      */
     public function sort(array $sort = []): Builder
     {
-        $order = $sort['order'] ? 'asc' : 'desc';
-        $this->orderBy($this->resolveSortField($sort['field'] ?? 'id'), $order);
+        $direction = $sort['order'] ? 'asc' : 'desc';
+        if ($sort['field'] !== 'session_date_users') {
+            $this->orderBy($this->resolveSortField($sort['field'] ?? 'id'), $direction);
+        } else {
+            // $this->whereHas('sessions', function ($q) use ($order) {
+            //     return $q->orderBy('session_date', $order)->dd();
+            // });
+            // dd(
+            //     $this->select('clients.id')->join('sessions', 'sessions.client_id', '=', 'clients.id')
+            //         ->select('sessions.session_date')
+            //         ->orderBy('sessions.session_date', $order);
+            // );
+            // dd(
+            $this->orderBy(
+                Session::select(['session_date'])
+                    ->whereColumn('sessions.client_id', 'clients.id')
+                    ->latest('session_date')
+                    ->take(1),
+                $direction
+            );
+            // );
+            // $this->whereHas('sessions', fn($q) => $q->orderBy('session_date', $order));
+            // $this->orderBy(
+            //     $this-whereHas('sessions', fn($q) => $q->latest('session_date')),
+            //     $order
+            // );
+        }
 
         return $this;
     }
@@ -42,7 +69,6 @@ class FilterBuilder extends Builder
     {
         return match ($field) {
             'id' => 'id',
-            // 'session_date_user' => 'session_date',
             default => $field,
         };
     }

@@ -1,8 +1,6 @@
 import axios from '../../classes/AxiosWrapper';
 const url = '/api/v1';
 
-
-
 const state = () => ({
     clients: [],
     calendarSessions: [],
@@ -18,13 +16,10 @@ const actions = {
         const response = await axios.get(`${url}/session-clients`);
         commit('setClients', response.data.data.clients);
     },
-
     async getCalendarSessions({ commit }) {
         let response = await axios.get(`${url}/calendar-sessions`)
         commit('setCalendarSessions', response.data.data.sessions);
     },
-
-
 };
 
 const mutations = {
