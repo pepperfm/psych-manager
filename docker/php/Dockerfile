@@ -42,7 +42,12 @@ USER www-data
 
 COPY composer.json composer.json
 
-RUN composer i
+RUN composer i \
+   --no-interaction \
+   --no-plugins \
+   --no-scripts \
+   --no-dev \
+   --prefer-dist
 
 COPY . .
 RUN composer dump-autoload

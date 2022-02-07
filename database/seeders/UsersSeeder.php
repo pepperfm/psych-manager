@@ -52,7 +52,5 @@ class UsersSeeder extends Seeder
             'gender' => GenderEnum::FEMALE->value,
             'phone' => '88005553538',
         ]);
-
-        \Illuminate\Support\Facades\Artisan::call('passport:install');
     }
 }
