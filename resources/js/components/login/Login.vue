@@ -86,7 +86,7 @@ export default {
         // let redirect = this.$route.query.redirect ? this.$route.query.redirect : '/'
         // await this.$router.push(redirect)
         await this.$router.push({ name: 'main'})
-        await this.$message.success(response.data.message);
+        await this.$message.success('Success');
       } catch (e) {
         if (!e.response) {
           throw e

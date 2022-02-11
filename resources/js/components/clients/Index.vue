@@ -34,9 +34,9 @@
                   v-if="filters.sort.field === 'name'"
                   class="pull-right fa"
                   v-bind:class="{
-                      'fas fa-sort-amount-down': !filters.sort.order,
-                      'fas fa-sort-amount-up' : filters.sort.order
-                    }"></i>
+                    'fas fa-sort-amount-down': !filters.sort.order,
+                    'fas fa-sort-amount-up' : filters.sort.order
+                  }"></i>
               </th>
               <th v-if="filters.visibleFields.category">
                 Категория
@@ -58,9 +58,9 @@
                   v-if="filters.sort.field === 'session_date_users'"
                   class="pull-right fa"
                   v-bind:class="{
-                      'fas fa-sort-amount-down': !filters.sort.order,
-                      'fas fa-sort-amount-up' : filters.sort.order
-                    }"></i>
+                    'fas fa-sort-amount-down': !filters.sort.order,
+                    'fas fa-sort-amount-up' : filters.sort.order
+                  }"></i>
               </th>
               <th>Действия</th>
             </tr>
@@ -336,7 +336,7 @@ export default {
     async remove(client) {
       this.errors = []
       try {
-        await this.$http.delete('/api/v1/clients/' + client.id)
+        await this.$http.delete(`${this.actions.rest}/${client.id}`)
         await this.getRecords()
       } catch (e) {
         if (!e.response) {

@@ -1,95 +1,80 @@
 <template>
-  <el-row>
-    <el-row class="pb-3">
-      <el-col :span="24">
-        <el-card>
-          <el-button type="success" @click="save">Сохранить</el-button>
-        </el-card>
-      </el-col>
-    </el-row>
-    <el-row>
-      <el-col :span="24" v-loading="loading">
-        <el-card>
-          <div slot="header">
-            <h4>Основная информация</h4>
+  <div class="col-8">
+    <div class="row">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-header">
+            <div class="row">
+              <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-xs-12 text-left">
+                <el-button type="success" @click="save()">
+                  <i class="el-icon-check"></i>
+                  Сохранить
+                </el-button>
+              </div>
+            </div>
           </div>
-          <el-form ref="user" :model="user">
-            <div class="form-group">
-              <label>Имя</label>
-              <el-input v-model="user.name" size="small"></el-input>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-4">
+        <div class="card">
+          <div class="card-body" v-loading="loading">
+            <div>
+              <h4>Основная информация</h4>
             </div>
-            <div class="form-group">
-              <label>Email</label>
-              <el-input v-model="user.email" size="small"></el-input>
+            <el-form ref="user" :model="user">
+              <div class="form-group">
+                <label>Имя</label>
+                <el-input v-model="user.name" size="small"></el-input>
+              </div>
+              <div class="form-group">
+                <label>Email</label>
+                <el-input v-model="user.email" size="small"></el-input>
+              </div>
+              <div class="form-group">
+                <label>Телефон</label>
+                <span class="not-set">*</span>
+                <el-input v-model="user.phone" size="small"></el-input>
+              </div>
+              <div class="form-group">
+                <label>Пол</label>
+                <el-select v-model="user.gender" size="small" class="w-100">
+                  <el-option label="Жещнина" :value="0"></el-option>
+                  <el-option label="Мужчина" :value="1"></el-option>
+                </el-select>
+              </div>
+              <div class="form-group">
+                <label>Личный сайт</label>
+                <el-input
+                  v-model="user.connection_type_link"
+                  placeholder="https://"
+                  size="small"
+                  clearable>
+                </el-input>
+              </div>
+            </el-form>
+          </div>
+        </div>
+      </div>
+      <div class="col-6">
+        <div class="card">
+          <div class="card-body" v-loading="loading">
+            <div>
+              <h4>Специализация</h4>
             </div>
-            <div class="form-group">
-              <label>Телефон</label>
-              <span class="not-set">*</span>
-              <el-input v-model="user.phone" size="small"></el-input>
-            </div>
-            <div class="form-group">
-              <label>Пол</label>
-              <el-select v-model="user.gender" size="small" class="w-100">
-                <el-option label="Жещнина" :value="0"></el-option>
-                <el-option label="Мужчина" :value="1"></el-option>
-              </el-select>
-            </div>
-            <div class="form-group">
-              <label>Личный сайт</label>
-              <el-input
-                v-model="user.connection_type_link"
-                placeholder="https://"
-                size="small"
-                clearable>
-              </el-input>
-            </div>
-          </el-form>
-        </el-card>
-      </el-col>
-
-<!--      <el-col :span="8" :offset="1" v-loading="loading">-->
-<!--        <el-card>-->
-<!--          <div slot="header">-->
-<!--            <h4>Специализация</h4>-->
-<!--          </div>-->
-<!--          <el-form ref="categories" :model="categories">-->
-<!--            <div class="form-group">-->
-<!--              <label>Категории</label>-->
-<!--              <el-tooltip class="item" effect="dark" :content="tooltips.user.categories" placement="top">-->
-<!--                <i class="el-icon-info"></i>-->
-<!--              </el-tooltip>-->
-<!--              <el-input-->
-<!--                class="input-new-tag"-->
-<!--                v-if="addCategoryInput"-->
-<!--                v-model="new_category_name"-->
-<!--                ref="saveTagInput"-->
-<!--                size="small"-->
-<!--                @keyup.enter.native="handleInputConfirm"-->
-<!--                @blur="handleInputConfirm"-->
-<!--              >-->
-<!--              </el-input>-->
-<!--              <el-button v-else class="button-new-tag" size="small" plain @click="showInput">+ Добавить категорию</el-button>-->
-<!--            </div>-->
-<!--            <div class="form-group">-->
-<!--              <el-checkbox-group v-model="selected_categories" size="small">-->
-<!--                <el-checkbox-button-->
-<!--                  v-for="category in categories"-->
-<!--                  :key="category.id"-->
-<!--                  :label="category.id"-->
-<!--                  effect="plain"-->
-<!--                  border-->
-<!--                  :checked="categories.includes(category.id)"-->
-<!--                  @change="syncCategories">-->
-<!--                  {{ category.name }}-->
-<!--                </el-checkbox-button>-->
-<!--              </el-checkbox-group>-->
-<!--            </div>-->
-
-<!--          </el-form>-->
-<!--        </el-card>-->
-<!--      </el-col>-->
-    </el-row>
-  </el-row>
+            <form class="form-control">
+              <div class="form-group">
+                <label>Категории</label>
+              </div>
+              <div class="form-group">
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
